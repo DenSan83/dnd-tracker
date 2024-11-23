@@ -10,7 +10,7 @@ class View
     {
         $tpl = 'app/Views/Templates/'.$template.'_tpl.php';
         if (!file_exists($tpl)) {
-            // add error_log
+            // TODO: add error_log
             echo 'Template '.$tpl.'_tpl not found.';
             exit;
         }

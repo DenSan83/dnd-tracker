@@ -14,11 +14,11 @@ class Controller
         $this->view = new View();
     }
 
-    public function redirect($path, $params = '')
+    public function redirect($route, $params = '')
     {
         $router = new Router();
-        if (!$router->getRoute($path)) {
-            $route = 'login';
+        if (!$router->getRoute($route)) {
+            $route = '';
         }
 
         if (!empty($sessionMessage)) $_SESSION['return'] = $sessionMessage;

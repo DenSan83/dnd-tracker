@@ -3,6 +3,7 @@
 namespace app\Controllers;
 
 use app\Models\CharacterModel;
+use app\Models\OnlineModel;
 
 class CharacterController extends Controller
 {
@@ -13,9 +14,17 @@ class CharacterController extends Controller
         $characters = $CharacterModel->getAll();
 
         // 2. if theres a request, create session
-        if (isset($_GET['character']) && array_key_exists($_GET['character'], $characters)) {
-            $_SESSION['character'] = $characters[$_GET['character']];
-            // log
+        $onlineModel = new OnlineModel();
+        if (isset($_GET['character']) &&
+            array_key_exists($_GET['character'], $characters) &&
+            !$onlineModel->checkIfOnline($_GET['character']))
+        {
+            $character = $characters[$_GET['character']];
+            $_SESSION['character'] = $character;
+            // set online
+            $onlineModel->setOnline($character->getId(), $character->getName());
+
+            // TODO: log
         }
 
         $data = ['characters' => $characters];
@@ -25,9 +34,22 @@ class CharacterController extends Controller
     public function logout()
     {
         session_destroy();
+        // set offline
+        $onlineModel = new OnlineModel();
+        $onlineModel->setOffline($_SESSION['character']->getId());
         unset($_SESSION);
-        // log
-        $this->redirect('login');
+
+        // TODO: log
+        $this->redirect('');
+    }
+
+    public function temp()
+    {
+        // TODO: move function to a HomeController
+        if (CONF['allow_login']['conf_value'] === '1') {
+            $this->redirect('login');
+        }
+        echo 'CharacterController::temp()'; // message "No game is available atm"
     }
 
 }

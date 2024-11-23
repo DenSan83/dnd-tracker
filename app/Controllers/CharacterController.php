@@ -35,9 +35,11 @@ class CharacterController extends Controller
     {
         session_destroy();
         // set offline
-        $onlineModel = new OnlineModel();
-        $onlineModel->setOffline($_SESSION['character']->getId());
-        unset($_SESSION);
+        if (isset($_SESSION['character'])) {
+            $onlineModel = new OnlineModel();
+            $onlineModel->setOffline($_SESSION['character']->getId());
+            unset($_SESSION);
+        }
 
         // TODO: log
         $this->redirect('');

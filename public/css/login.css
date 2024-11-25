@@ -32,6 +32,25 @@ a {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border: 0;
+    /*border-radius: 0;*/
+    padding: 0;
+    background-image: url("../../public/images/paper.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    aspect-ratio: 3/4;
+    position: relative;
+    overflow: hidden;
+}
+.character-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.3);
 }
 .char-wrapper {
     position: relative;
@@ -56,4 +75,11 @@ a {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+}
+.character-card .text-success {
+    height: 15%;
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    font-weight: 500;
 }

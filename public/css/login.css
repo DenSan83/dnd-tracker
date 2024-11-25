@@ -33,9 +33,9 @@ a {
     align-items: center;
     justify-content: center;
     border: 0;
-    /*border-radius: 0;*/
-    padding: 0;
-    background-image: url("../../public/images/paper.jpg");
+    background-image: url("../../public/images/paper.png");
+    background-color: transparent;
+    padding: 10px;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position: center;

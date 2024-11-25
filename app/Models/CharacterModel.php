@@ -12,6 +12,7 @@ class CharacterModel extends Model
     {
         $req = $this->db()->prepare("
             SELECT * FROM characters
+            ORDER BY name
         ");
         $req->execute();
         $results = $req->fetchAll(PDO::FETCH_ASSOC);

@@ -11,7 +11,7 @@ class View
         $tpl = 'app/Views/Templates/'.$template.'_tpl.php';
         if (!file_exists($tpl)) {
             // TODO: add error_log
-            echo 'Template '.$tpl.'_tpl not found.';
+            echo 'Template '.$tpl.' not found.';
             exit;
         }
         include_once $tpl;

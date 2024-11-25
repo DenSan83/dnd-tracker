@@ -3,9 +3,10 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 --
--- Structure de la table `characters`
+--  `characters` table
 --
 
+DROP TABLE IF EXISTS `characters`;
 CREATE TABLE `characters` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -18,7 +19,7 @@ CREATE TABLE `characters` (
   `role` varchar(255) NOT NULL,
   `type` varchar(50) NOT NULL,
   `owner` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Index and AUTO_INCREMENT for `characters`

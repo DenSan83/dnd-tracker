@@ -1,0 +1,16 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+--
+--  `online` table
+--
+
+DROP TABLE IF EXISTS `online`;
+CREATE TABLE IF NOT EXISTS `online` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `character_id` int NOT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+COMMIT;

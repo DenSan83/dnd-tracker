@@ -10,7 +10,7 @@ use Exception;
 class Router
 {
     private $routes = [
-        '' => 'CharacterController::temp',
+        '' => 'HomeController::home',
         'login' => 'CharacterController::login',
         'logout' => 'CharacterController::logout',
     ];

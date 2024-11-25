@@ -1,0 +1,32 @@
+body {
+    background-image: url("../../public/images/sleeping-dragon.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    background-attachment: fixed;
+}
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 1;
+}
+
+.container {
+    display: flex;
+    flex-direction: column; /* Alinea los elementos verticalmente */
+    justify-content: center; /* Centra los elementos verticalmente */
+    align-items: center; /* Centra los elementos horizontalmente */
+    height: 100vh; /* Hace que el contenedor ocupe toda la altura de la ventana */
+    text-align: center; /* Centra el texto horizontalmente */
+}
+
+h1, h2 {
+    color: #fff;
+    text-shadow: 2px 2px #000;
+}

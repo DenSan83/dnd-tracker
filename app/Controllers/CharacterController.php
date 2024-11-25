@@ -45,13 +45,4 @@ class CharacterController extends Controller
         $this->redirect('');
     }
 
-    public function temp()
-    {
-        // TODO: move function to a HomeController
-        if (CONF['allow_login']['conf_value'] === '1') {
-            $this->redirect('login');
-        }
-        echo 'CharacterController::temp()'; // message "No game is available atm"
-    }
-
 }

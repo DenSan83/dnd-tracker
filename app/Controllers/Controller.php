@@ -14,17 +14,22 @@ class Controller
         $this->view = new View();
     }
 
-    public function redirect($route, $params = '')
+    public function redirect($route, $routeParams = '', $sessionData = [])
     {
         $router = new Router();
         if (!$router->getRoute($route)) {
             $route = '';
         }
 
-        if (!empty($sessionMessage)) $_SESSION['return'] = $sessionMessage;
-        if (!empty($params)) $params = '?'.$params;
+        if (!empty($sessionData)) $_SESSION['return'] = $sessionData;
+        if (!empty($routeParams)) $params = '?'.$routeParams;
         header('Location: '. HOST . '/' . $route . $params);
         exit;
+    }
+
+    public function error404()
+    {
+        $this->view->load('error404', []);
     }
 
 }

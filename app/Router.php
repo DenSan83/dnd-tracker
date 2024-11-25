@@ -13,6 +13,7 @@ class Router
         '' => 'HomeController::home',
         'login' => 'CharacterController::login',
         'logout' => 'CharacterController::logout',
+        '404' => 'Controller::error404',
     ];
     private $publicRoutes = ['', 'logout', 'admin'];
 

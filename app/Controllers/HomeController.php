@@ -6,13 +6,15 @@ class HomeController extends Controller
 {
     public function home()
     {
-        if (CONF['allow_login']['conf_value'] === '1') {
+        $homeTpl = 'offline-home';
+        if (isset($_SESSION['character'])) {
+            $homeTpl = 'online-home';
+        } else if (CONF['allow_login']['conf_value'] === '1') {
             $this->redirect('login');
         }
 
-        // message "No game is available atm"
         $data = [];
-        $this->view->load('home', $data);
+        $this->view->load($homeTpl, $data);
     }
 
 }

@@ -3,11 +3,15 @@
 namespace app\Controllers;
 
 use app\Models\AdminModel;
+use app\Models\ConfModel;
 
 class AdminController extends Controller
 {
     public function adminLogin()
     {
+        $tpl = 'admin';
+
+        // If login request
         if (isset($_POST['admin'])) {
             $adminModel = new AdminModel();
             if (!$adminUser = $adminModel->findAdmin($_POST['admin']['email'])) {
@@ -25,11 +29,20 @@ class AdminController extends Controller
 
             $_SESSION['admin'] = $adminUser['email'];
             // TODO: log
-            $this->redirect('');
+            $this->redirect('admin');
         }
 
-        $data = [];
-        $this->view->load('admin', $data);
+        // If an admin is logged in
+        if (!isset($_SESSION['admin'])) {
+            $this->view->load('admin-login', []);
+            exit;
+        }
+
+        $confModel = new ConfModel();
+        $data = $confModel->getConf();
+        $this->view->load('admin', [
+            'conf' => $data
+        ]);
     }
 
 }

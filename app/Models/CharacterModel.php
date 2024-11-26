@@ -8,11 +8,13 @@ use PDO;
 class CharacterModel extends Model
 {
     private $defaultImage = 'image';
-    public function getAll()
+    public function getAll($order = 'name')
     {
+        $wherePlayers = '';
+        if ($order === 'name') $wherePlayers = ' WHERE type = "player"';
         $req = $this->db()->prepare("
-            SELECT * FROM characters
-            ORDER BY name
+            SELECT * FROM characters $wherePlayers
+            ORDER BY $order
         ");
         $req->execute();
         $results = $req->fetchAll(PDO::FETCH_ASSOC);
@@ -34,6 +36,17 @@ class CharacterModel extends Model
         }
 
         return $characters;
+    }
+
+    public function getInitiativeList()
+    {
+        $req = $this->db()->prepare("
+            SELECT id, initiative, name, image FROM characters
+            ORDER BY initiative DESC
+        ");
+        $req->execute();
+        return $req->fetchAll(PDO::FETCH_UNIQUE|PDO::FETCH_ASSOC);
+
     }
 
 }

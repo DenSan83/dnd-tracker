@@ -23,8 +23,8 @@ class CharacterController extends Controller
             $_SESSION['character'] = $character;
             // set online
             $onlineModel->setOnline($character->getId(), $character->getName());
-
             // TODO: log
+            $this->redirect('');
         }
 
         $data = ['characters' => $characters];

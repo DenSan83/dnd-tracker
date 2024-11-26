@@ -29,7 +29,7 @@ class Controller
 
     public function error404()
     {
-        $this->view->load('error404', []);
+        $this->view->load('error404');
     }
 
 }

@@ -13,6 +13,7 @@ class Router
         '' => 'HomeController::home',
         'login' => 'CharacterController::login',
         'logout' => 'CharacterController::logout',
+        'admin' => 'AdminController::adminLogin',
         '404' => 'Controller::error404',
     ];
     private $publicRoutes = ['', 'logout', 'admin'];
@@ -62,7 +63,6 @@ class Router
         define('HOST', $_ENV['HOST']);
         $confModel = new ConfModel();
         define('CONF', $confModel->getConf());
-
     }
 
 }

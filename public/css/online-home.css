@@ -1,0 +1,123 @@
+body {
+    padding-top: 56px;
+    background-image: url("../../public/images/paperbg.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+}
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    height: 60px;
+
+    background-size: cover;
+    background-position: center center;
+    background-image: url("../../public/images/bg-navbar.png");
+}
+.navbar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1;
+}
+.navbar .container {
+    z-index: 1;
+}
+.navbar-brand {
+    text-shadow: 2px 2px 3px #e40712;
+}
+.sidebar {
+    height: calc(100vh - 56px);
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 350px;
+    background-color: #f8f9fa;
+    padding-top: 20px;
+    z-index: 1020;
+    overflow-y: auto;
+}
+.sidebar .ability-scores {
+    text-align: center;
+    border: 1px solid red;
+    margin-bottom: 3px;
+}
+.sidebar .ability-scores .col-4 {
+    display: flex;
+    flex-direction: column;
+}
+.accordion-button {
+    background-color: #31404d;
+}
+.accordion-button:not(.collapsed) {
+    background-color: #182025;
+}
+.accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem #e4071240;
+}
+.accordion-item {
+    border: 0;
+}
+.accordion-item:not(:last-child) {
+    border-bottom: 1px solid transparent;
+}
+.content {
+    padding: 20px;
+    transition: margin-left 0.3s;
+    height: calc(100vh - 57px);
+    max-width: 800px;
+}
+.contains-image {
+    height: calc(100vh - 250px);
+}
+.character_image {
+    max-height: 100%;
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3))
+    drop-shadow(20px 15px 5px rgba(0, 0, 0, 0.2));
+    z-index: 1;
+}
+.turns {
+    height: 80px;
+    overflow-x: auto;
+}
+.turns .col {
+    border: 1px solid green;
+    display: flex;
+    flex-direction: column;
+}
+.turns .col img {
+    /*max-width: 100%;*/
+    overflow: hidden;
+    max-height: 54px;
+    object-fit: cover;
+    object-position: center top;
+}
+@media (min-width: 993px) {
+    .content {
+        margin-left: 350px;
+    }
+    #sidebarToggle {
+        display: none;
+    }
+}
+#closeSidebar {
+    display: none;
+}
+@media (max-width: 992px) {
+    .sidebar {
+        display: none;
+    }
+    .content {
+        margin-left: 0;
+    }
+    #closeSidebar {
+        display: block;
+    }
+}

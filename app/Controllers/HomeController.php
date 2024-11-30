@@ -29,6 +29,25 @@ class HomeController extends Controller
             'turn' => $turn,
             'my_character' => $myCharacter,
         ]);
+
+        //-Aside fields:
+        // attacks (cantrip, lvl1, lvl2),
+        // (class,race,bg,alignment),
+        // appearance,
+        // backstory,
+
+        //-Stats
+        // Ability scores + modifiers(str,dex,con,int,wis,cha),
+        // skills,
+        // features (by class) + feats
+        // "other proficiencies & languages",
+
+        //-Backpack:
+        // inventory,
+
+        //-Sword
+        // equipment+armor,
+
     }
 
     public function getCurrentTurn()

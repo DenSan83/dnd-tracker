@@ -3,102 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>DnD Tracker - Homepage</title>
-    <style>
-        body {
-            padding-top: 56px;
-        }
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1030;
-        }
-        .sidebar {
-            height: calc(100vh - 56px);
-            position: fixed;
-            top: 56px;
-            left: 0;
-            width: 250px;
-            background-color: #f8f9fa;
-            padding-top: 20px;
-            z-index: 1020;
-        }
-        .content {
-            padding-top: 20px;
-            transition: margin-left 0.3s;
-        }
-        @media (min-width: 993px) {
-            .content {
-                margin-left: 250px;
-            }
-            #sidebarToggle {
-                display: none;
-            }
-        }
-        #closeSidebar {
-            display: none;
-        }
-        @media (max-width: 992px) {
-            .sidebar {
-                display: none;
-            }
-            .content {
-                margin-left: 0;
-            }
-            #closeSidebar {
-                display: block;
-            }
-        }
-        .character_image {
-            max-width: 100%;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./public/css/online-home.css">
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Logo</a>
+<nav class="navbar">
+    <div class="container">
+        <a class="navbar-brand text-light fw-bold" href="<?= HOST ?>/">D&D Tracker</a>
         <div class="" id="navbarNav">
             <ul class="navbar-nav ms-auto d-flex flex-row">
                 <li class="nav-item">
-                    <a href="#" class="nav-link me-2" id="sidebarToggle" aria-label="Toggle navigation">
+                    <a href="#" class="nav-link me-2 text-light" id="sidebarToggle" aria-label="Toggle navigation">
                         Turn
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= HOST ?>/logout">Logout</a>
+                    <a class="nav-link text-light" href="<?= HOST ?>/logout">Logout</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<div class="sidebar d-lg-block bg-light border-end" id="sidebar">
-    <button id="closeSidebar" class="btn btn-light mb-3">
-        <span>&times;</span> Close
-    </button>
-    <ul class="list-unstyled">
-        <?php foreach ($data['character_list'] as $character) { ?>
-            <li>
-                <span><?= $character->getName() ?></span>
-            </li>
-        <?php } ?>
-    </ul>
+<div class="sidebar d-lg-block bg-light border-end p-1" id="sidebar">
+    <div class="d-flex justify-content-end">
+        <button id="closeSidebar" class="btn">
+            <span>&times;</span>
+        </button>
+    </div>
+
+    <a href="<?= HOST ?>/edit/abilities-and-modifiers">
+        <div class="ability-scores">
+            <div class="row">
+                <div class="col-4">
+                    <span class="modifier">4</span>
+                    <span class="full-ability">Str</span>
+                </div>
+                <div class="col-4">Dex</div>
+                <div class="col-4">Con</div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <span class="modifier">0</span>
+                    <span class="full-ability">Int</span>
+                </div>
+                <div class="col-4">Wis</div>
+                <div class="col-4">Cha</div>
+            </div>
+        </div>
+    </a>
+
+
+    <!---->
+    <div class="accordion" id="my-data">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed text-light bg-opacity-75 rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_1" aria-controls="collapse_1">
+                    Cantrips
+                </button>
+            </h2>
+            <div id="collapse_1" class="accordion-collapse collapse" data-bs-parent="#my-data">
+                <div class="accordion-body">
+                    <div class="d-block">
+                        <p>
+                            Payé par : <span>Dennis</span>
+                        </p>
+                        <p>
+                            Prochain date : <span>2024-10-03</span>
+                        </p>
+                        <p>
+                            Fréquence : <span>monthly</span>
+                        </p>
+                        <p>
+                            Actif : <span>oui</span>
+                        </p>
+                        <div>
+                            <button class="btn btn-success add-recurrent">
+                                Modifier &gt;&gt;
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed text-light bg-opacity-75" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_2" aria-controls="collapse_2">
+                    Level 1 attacks
+                </button>
+            </h2>
+            <div id="collapse_2" class="accordion-collapse collapse" data-bs-parent="#my-data">
+                <div class="accordion-body">
+                    <div class="d-block">
+                        <p>
+                            Payé par : <span>Dennis</span>
+                        </p>
+                        <p>
+                            Prochain date : <span>2024-10-03</span>
+                        </p>
+                        <p>
+                            Fréquence : <span>monthly</span>
+                        </p>
+                        <p>
+                            Actif : <span>oui</span>
+                        </p>
+                        <div>
+                            <button class="btn btn-success add-recurrent">
+                                Modifier &gt;&gt;
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed text-light bg-opacity-75" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_3" aria-controls="collapse_3">
+                    Level 2 attacks
+                </button>
+            </h2>
+            <div id="collapse_3" class="accordion-collapse collapse" data-bs-parent="#my-data">
+                <div class="accordion-body">
+                    <div class="d-block">
+                        <p>
+                            Payé par : <span>Dennis</span>
+                        </p>
+                        <p>
+                            Prochain date : <span>2024-10-03</span>
+                        </p>
+                        <p>
+                            Fréquence : <span>monthly</span>
+                        </p>
+                        <p>
+                            Actif : <span>oui</span>
+                        </p>
+                        <div>
+                            <button class="btn btn-success add-recurrent">
+                                Modifier &gt;&gt;
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed text-light bg-opacity-75 rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_0" aria-controls="collapse_0">
+                    <b class="item_name">Loyer</b>: $ <span class="item_amount">925.00</span>
+                </button>
+            </h2>
+            <div id="collapse_0" class="accordion-collapse collapse" data-bs-parent="#my-data">
+                <div class="accordion-body">
+                    <div class="d-block">
+                        <?= nl2br($data['my_character']->getData()) ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!---->
+
+
+
 </div>
 
-<div class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <h1><?= $data['my_character']->getName() ?></h1>
-                <p>
-                    <img src="./uploads/<?= $data['my_character']->getImage() ?>" class="character_image">
-                </p>
+<div class="content text-center">
+    <div class="title px-5">
+        <h2><?= $data['my_character']->getName() ?></h2>
+        Max HP: <?= $data['my_character']->getMaxHealth() ?>
+        <?php $width = 50; ?>
+        <a href="">
+            <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" style="width: <?= $width/$data['my_character']->getMaxHealth() *100 ?>%"><?= $width ?></div>
             </div>
+        </a>
+    </div>
+    <div class="container contains-image">
+        <img src="./uploads/<?= $data['my_character']->getImage() ?>" class="character_image">
+    </div>
+    <div class="turns px-5">
+        <div class="row d-flex flex-nowrap">
+            <?php foreach (array_reverse($data['character_list']) as $character) { ?>
+                <div class="col turn-<?= $character->getId() ?>">
+                    <span>(<?= $character->getInitiative() ?>)</span>
+                    <img src="./uploads/<?= $character->getImage() ?>"/>
+                </div>
+            <?php } ?>
         </div>
     </div>
 </div>

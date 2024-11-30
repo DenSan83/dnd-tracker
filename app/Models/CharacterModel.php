@@ -12,6 +12,7 @@ class CharacterModel extends Model
     {
         $wherePlayers = '';
         if ($order === 'name') $wherePlayers = ' WHERE type = "player"';
+        if ($order === 'initiative') $wherePlayers = ' WHERE initiative <> 0';
         $req = $this->db()->prepare("
             SELECT * FROM characters $wherePlayers
             ORDER BY $order
@@ -46,7 +47,18 @@ class CharacterModel extends Model
         ");
         $req->execute();
         return $req->fetchAll(PDO::FETCH_UNIQUE|PDO::FETCH_ASSOC);
+    }
 
+    public function userIdExists(int $id)
+    {
+        $req = $this->db()->prepare("
+            SELECT COUNT(*) FROM characters
+            WHERE id = :id
+        ");
+        $req->bindValue(':id', $id);
+        $req->execute();
+
+        return (bool) $req->fetch(PDO::FETCH_ASSOC)['COUNT'];
     }
 
 }

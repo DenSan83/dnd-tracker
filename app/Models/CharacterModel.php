@@ -61,4 +61,23 @@ class CharacterModel extends Model
         return (bool) $req->fetch(PDO::FETCH_ASSOC)['COUNT'];
     }
 
+    /**
+     * @param int $id user_id
+     * @param string $charModifiers is an array transformed to json
+     * @return mixed
+     */
+    public function setCharModifiers(int $id, string $charModifiers)
+    {
+        $req = $this->db()->prepare("
+            UPDATE characters
+            set char_modifiers = :char_modifiers
+            WHERE id = :id
+        ");
+        $req->bindValue(':id', $id);
+        $req->bindValue(':char_modifiers', $charModifiers);
+        $req->execute();
+
+        return $req->fetch(PDO::FETCH_ASSOC);
+    }
+
 }

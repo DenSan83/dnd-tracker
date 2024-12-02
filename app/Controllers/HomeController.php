@@ -23,11 +23,23 @@ class HomeController extends Controller
         // Get my character image and description
         $myCharacter = $_SESSION['character'];
 
+        // Abilities and modifiers
+        $abilities = $myCharacter->getCharModifiers()['abilities'];
+        $modifiers = [];
+        $modifiersMap = [
+            1=>'-5', 2=>'-4', 3=> '-4', 4 => '-3',5=> '-3',6=>'-2',7=> '-2',8=> '-1',9=> '-1',10=> '0',
+            11=> '0',12=> '+1',13=> '+1',14=> '+2',15=> '+2',16=> '+3',17=> '+3',18=> '+4',19=> '+4',20=>'+5'
+        ];
+        foreach ($abilities as $key => $ability) {
+            $modifiers[$key] = $modifiersMap[$ability];
+        }
 
         $this->view->load($homeTpl, [
             'character_list' => $characterList,
             'turn' => $turn,
             'my_character' => $myCharacter,
+            'abilities' => $abilities,
+            'modifiers' => $modifiers
         ]);
 
         //-Aside fields:

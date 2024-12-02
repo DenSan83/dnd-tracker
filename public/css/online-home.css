@@ -44,14 +44,30 @@ body {
     z-index: 1020;
     overflow-y: auto;
 }
-.sidebar .ability-scores {
+.ability-scores {
     text-align: center;
-    border: 1px solid red;
-    margin-bottom: 3px;
+    text-decoration: none;
+    color: #000;
+    margin: auto;
 }
-.sidebar .ability-scores .col-4 {
+.ability-scores .col-4 {
     display: flex;
     flex-direction: column;
+}
+.ability-scores.editor {
+    max-width: 333px;
+}
+.ability-scores .col-4 {
+    background-size: contain;
+
+    background-image: url("../../public/images/ability-frame.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100px;
+    max-width: 110px;
+}
+.ability-scores.editor .col-4 {
+    height: 120px;
 }
 .accordion-button {
     background-color: #31404d;
@@ -100,7 +116,7 @@ body {
     object-position: center top;
 }
 @media (min-width: 993px) {
-    .content {
+    .content-home {
         margin-left: 350px;
     }
     #sidebarToggle {

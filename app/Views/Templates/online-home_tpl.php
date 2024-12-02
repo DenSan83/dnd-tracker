@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DnD Tracker - Homepage</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./public/css/online-home.css">
+    <link rel="stylesheet" href="<?=HOST?>/public/css/online-home.css">
 </head>
 <body>
 
@@ -20,7 +20,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="<?= HOST ?>/logout">Logout</a>
+                    <a class="nav-link text-light" href="<?= HOST ?>/logout?id=<?= $_SESSION['character']->getId() ?>">Logout</a>
                 </li>
             </ul>
         </div>
@@ -34,23 +34,39 @@
         </button>
     </div>
 
-    <a href="<?= HOST ?>/edit/abilities-and-modifiers">
-        <div class="ability-scores">
-            <div class="row">
-                <div class="col-4">
-                    <span class="modifier">4</span>
-                    <span class="full-ability">Str</span>
-                </div>
-                <div class="col-4">Dex</div>
-                <div class="col-4">Con</div>
+    <a href="<?= HOST ?>/edit/abilities-and-modifiers" class="ability-scores">
+        <div class="row flex-nowrap justify-content-center mb-2">
+            <div class="col-4 col-str">
+                <b class="mb-2">Str</b>
+                <span class="text-center m-1 mb-2"><?= $data['abilities']['str'] ?? '10' ?></span>
+                <span class="modifier"><?= $data['modifiers']['str'] ?? '0' ?></span>
             </div>
-            <div class="row">
-                <div class="col-4">
-                    <span class="modifier">0</span>
-                    <span class="full-ability">Int</span>
-                </div>
-                <div class="col-4">Wis</div>
-                <div class="col-4">Cha</div>
+            <div class="col-4 col-dex">
+                <b class="mb-2">Dex</b>
+                <span class="text-center m-1 mb-2"><?= $data['abilities']['dex'] ?? '10' ?></span>
+                <span class="modifier"><?= $data['modifiers']['dex'] ?? '0' ?></span>
+            </div>
+            <div class="col-4 col-con">
+                <b class="mb-2">Con</b>
+                <span class="text-center m-1 mb-2"><?= $data['abilities']['con'] ?? '10' ?></span>
+                <span class="modifier"><?= $data['modifiers']['con'] ?? '0' ?></span>
+            </div>
+        </div>
+        <div class="row flex-nowrap justify-content-center mb-2">
+            <div class="col-4 col-int">
+                <b class="mb-2">Int</b>
+                <span class="text-center m-1 mb-2"><?= $data['abilities']['int'] ?? '10' ?></span>
+                <span class="modifier"><?= $data['modifiers']['int'] ?? '0' ?></span>
+            </div>
+            <div class="col-4 col-wis">
+                <b class="mb-2">Wis</b>
+                <span class="text-center m-1 mb-2"><?= $data['abilities']['wis'] ?? '10' ?></span>
+                <span class="modifier"><?= $data['modifiers']['wis'] ?? '0' ?></span>
+            </div>
+            <div class="col-4 col-cha">
+                <b class="mb-2">Cha</b>
+                <span class="text-center m-1 mb-2"><?= $data['abilities']['cha'] ?? '10' ?></span>
+                <span class="modifier"><?= $data['modifiers']['cha'] ?? '0' ?></span>
             </div>
         </div>
     </a>
@@ -173,7 +189,7 @@
 
 </div>
 
-<div class="content text-center">
+<div class="content content-home text-center">
     <div class="title px-5">
         <h2><?= $data['my_character']->getName() ?></h2>
         Max HP: <?= $data['my_character']->getMaxHealth() ?>

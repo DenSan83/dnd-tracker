@@ -10,7 +10,7 @@ class Character
     private string $data;
     private int $maxHealth;
     private int $curHealth;
-    private string $charModifiers;
+    private array $charModifiers;
     private int $initiative;
     private string $role;
     private string $type;
@@ -49,7 +49,7 @@ class Character
         $this->data = $data;
         $this->maxHealth = $maxHealth;
         $this->curHealth = $curHealth;
-        $this->charModifiers = $charModifiers;
+        $this->charModifiers = ($charModifiers === '') ? [] : json_decode($charModifiers,true);
         $this->initiative = $initiative;
         $this->role = $role;
         $this->type = $type;
@@ -86,7 +86,7 @@ class Character
         return $this->curHealth;
     }
 
-    public function getCharModifiers(): string
+    public function getCharModifiers(): array
     {
         return $this->charModifiers;
     }
@@ -111,7 +111,11 @@ class Character
         return $this->owner;
     }
 
-
+    public function setCharModifiers(array $content)
+    {
+        $this->charModifiers = $content;
+        return $this;
+    }
 
 
 }

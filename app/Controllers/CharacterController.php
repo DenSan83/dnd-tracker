@@ -43,6 +43,9 @@ class CharacterController extends Controller
             $onlineModel->setOffline($_SESSION['character']->getId());
             unset($_SESSION);
         }
+        if (isset($_GET['id'])) {
+            $onlineModel->setOffline($_GET['id']);
+        }
 
         // TODO: log
         $this->redirect('');
@@ -71,11 +74,39 @@ class CharacterController extends Controller
         return $CharacterModel->userIdExists($id);
     }
 
+    public function setCharModifiers(string $key, array $content)
+    {
+        $myMods = $_SESSION['character']->getCharModifiers();
+        $myMods[$key] = $content;
+
+        $_SESSION['character']->setCharModifiers($myMods);
+        $CharacterModel = new CharacterModel();
+        $CharacterModel->setCharModifiers($_SESSION['character']->getId(), json_encode($myMods));
+    }
+
     public function editAbilitiesModifiers()
     {
-        var_dump('abilities and modif');
-        // TODO: -create a view,
-        // - save and edit abilities and modifiers
-        // - create column for this data (save as string? json?)
+        if (isset($_POST['ability'])) {
+            $ability = $_POST['ability'];
+            $this->setCharModifiers('abilities', $ability);
+        }
+
+        $abilities = $modifiers = [];
+        if (array_key_exists('abilities', $_SESSION['character']->getCharModifiers())) {
+            $abilities = $_SESSION['character']->getCharModifiers()['abilities'];
+            $modifiersMap = [
+                1=>'-5', 2=>'-4', 3=> '-4', 4 => '-3',5=> '-3',6=>'-2',7=> '-2',8=> '-1',9=> '-1',10=> '0',
+                11=> '0',12=> '+1',13=> '+1',14=> '+2',15=> '+2',16=> '+3',17=> '+3',18=> '+4',19=> '+4',20=>'+5'
+            ];
+
+            foreach ($abilities as $key => $ability) {
+                $modifiers[$key] = $modifiersMap[$ability];
+            }
+        }
+
+        $this->view->load('edit_abilities-and-modifiers', [
+            'abilities' => $abilities,
+            'modifiers' => $modifiers
+        ]);
     }
 }

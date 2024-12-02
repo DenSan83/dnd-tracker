@@ -193,10 +193,10 @@
     <div class="title px-5">
         <h2><?= $data['my_character']->getName() ?></h2>
         Max HP: <?= $data['my_character']->getMaxHealth() ?>
-        <?php $width = 50; ?>
+        <?php $curHealth = $data['my_character']->getCurHealth(); ?>
         <a href="">
             <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" style="width: <?= $width/$data['my_character']->getMaxHealth() *100 ?>%"><?= $width ?></div>
+                <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" style="width: <?= $curHealth/$data['my_character']->getMaxHealth() *100 ?>%"><?= $curHealth ?></div>
             </div>
         </a>
     </div>

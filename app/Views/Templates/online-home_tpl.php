@@ -170,7 +170,7 @@
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed text-light bg-opacity-75 rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_0" aria-controls="collapse_0">
-                    <b class="item_name">Loyer</b>: $ <span class="item_amount">925.00</span>
+                    Other
                 </button>
             </h2>
             <div id="collapse_0" class="accordion-collapse collapse" data-bs-parent="#my-data">

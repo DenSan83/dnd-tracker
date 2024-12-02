@@ -89,6 +89,8 @@ class CharacterController extends Controller
         if (isset($_POST['ability'])) {
             $ability = $_POST['ability'];
             $this->setCharModifiers('abilities', $ability);
+            // TODO log
+            // TODO: return success message
         }
 
         $abilities = $modifiers = [];

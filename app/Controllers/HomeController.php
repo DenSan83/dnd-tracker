@@ -22,7 +22,7 @@ class HomeController extends Controller
         $turn = $this->getCurrentTurn();
 
         // Get my character image and description
-        $myCharacter = $abilities = $modifiers = [];
+        $myCharacter = $abilities = $modifiers = $about = [];
         if (isset($_SESSION['character'])) {
             $myCharacter = $_SESSION['character'];
 
@@ -35,6 +35,9 @@ class HomeController extends Controller
             foreach ($abilities as $key => $ability) {
                 $modifiers[$key] = $modifiersMap[$ability];
             }
+
+            // About
+            $about = (array_key_exists('about', $myCharacter->getCharModifiers())) ? $myCharacter->getCharModifiers()['about'] : [];
         }
 
         $this->view->load($homeTpl, [
@@ -42,17 +45,18 @@ class HomeController extends Controller
             'turn' => $turn,
             'my_character' => $myCharacter,
             'abilities' => $abilities,
-            'modifiers' => $modifiers
+            'modifiers' => $modifiers,
+            'about' => $about
         ]);
 
         //-Aside fields:
-        // attacks (cantrip, lvl1, lvl2),
-        // (class,race,bg,alignment),
-        // appearance,
-        // backstory,
 
         //-Stats
         // Ability scores + modifiers(str,dex,con,int,wis,cha),
+
+        // About:(class,race,bg,alignment), appearance, backstory,
+        // Spells: (cantrip, lvl1, lvl2),
+
         // skills,
         // features (by class) + feats
         // "other proficiencies & languages",

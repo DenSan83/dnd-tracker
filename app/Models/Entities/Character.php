@@ -117,5 +117,11 @@ class Character
         return $this;
     }
 
+    public function setInitiative(int $initiative)
+    {
+        $this->initiative = $initiative;
+        return $this;
+    }
+
 
 }

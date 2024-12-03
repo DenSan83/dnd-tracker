@@ -7,14 +7,26 @@ use app\Models\OnlineModel;
 
 class CharacterController extends Controller
 {
+    private $model;
+    public function __construct()
+    {
+        parent::__construct();
+        $characterModel = new CharacterModel();
+        $this->model = $characterModel;
+    }
+
     private array $subRoutes = [
         'abilities-and-modifiers' => 'editAbilitiesModifiers',
+        'about' => 'editAbout',
+        'spells' => 'editSpells',
+        'skills' => 'editSkills',
+        'inventory' => 'editInventory',
+        'other' => 'editOther',
     ];
     public function login($data)
     {
         // 1. find all characters and serve them
-        $CharacterModel = new CharacterModel();
-        $characters = $CharacterModel->getAll();
+        $characters = $this->model->getAll();
 
         // 2. if theres a request, create session
         $onlineModel = new OnlineModel();
@@ -52,7 +64,7 @@ class CharacterController extends Controller
     }
 
     public function edit($parameters) {
-        if (isset($_SESSION['admin']) && $this->userIdExists($parameters[0])) {
+        if (isset($_SESSION['admin']) && $this->model->userIdExists($parameters[0])) {
             // edit/{user_id}/{subroute}/{params}
             // TODO: admin_log
             var_dump($parameters);
@@ -68,20 +80,13 @@ class CharacterController extends Controller
         }
     }
 
-    public function userIdExists(int $id)
-    {
-        $CharacterModel = new CharacterModel();
-        return $CharacterModel->userIdExists($id);
-    }
-
     public function setCharModifiers(string $key, array $content)
     {
         $myMods = $_SESSION['character']->getCharModifiers();
         $myMods[$key] = $content;
 
         $_SESSION['character']->setCharModifiers($myMods);
-        $CharacterModel = new CharacterModel();
-        $CharacterModel->setCharModifiers($_SESSION['character']->getId(), json_encode($myMods));
+        $this->model->setCharModifiers($_SESSION['character']->getId(), json_encode($myMods));
     }
 
     public function editAbilitiesModifiers()
@@ -94,7 +99,7 @@ class CharacterController extends Controller
         }
 
         $abilities = $modifiers = [];
-        if (array_key_exists('abilities', $_SESSION['character']->getCharModifiers())) {
+        if (isset($_SESSION['character']) && array_key_exists('abilities', $_SESSION['character']->getCharModifiers())) {
             $abilities = $_SESSION['character']->getCharModifiers()['abilities'];
             $modifiersMap = [
                 1=>'-5', 2=>'-4', 3=> '-4', 4 => '-3',5=> '-3',6=>'-2',7=> '-2',8=> '-1',9=> '-1',10=> '0',
@@ -110,5 +115,50 @@ class CharacterController extends Controller
             'abilities' => $abilities,
             'modifiers' => $modifiers
         ]);
+    }
+
+    public function editAbout()
+    {
+        if (isset($_POST['about'])) {
+            $ability = $_POST['about'];
+            $this->setCharModifiers('about', $ability);
+
+            $initiative = $ability['initiative'] ? $ability['initiative'] : 0;
+            $_SESSION['character']->setInitiative($initiative);
+            $this->model->setInitiative($_SESSION['character']->getId(), $initiative);
+            // TODO: log
+            // TODO: return success message
+        }
+
+        $clases = $this->model->getApiData('classes')['results'];
+        $about = [];
+        if (isset($_SESSION['character']) && array_key_exists('about', $_SESSION['character']->getCharModifiers())) {
+            $about = $_SESSION['character']->getCharModifiers()['about'];
+        }
+
+        $this->view->load('edit_about', [
+            'classes' => $clases,
+            'about' => $about
+        ]);
+    }
+
+    public function editSpells()
+    {
+        $this->view->load('edit_spells', []);
+    }
+
+    public function editSkills()
+    {
+        $this->view->load('edit_skills', []);
+    }
+
+    public function editInventory()
+    {
+        $this->view->load('edit_inventory', []);
+    }
+
+    public function editOther()
+    {
+        $this->view->load('edit_other', []);
     }
 }

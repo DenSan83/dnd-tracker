@@ -80,4 +80,40 @@ class CharacterModel extends Model
         return $req->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function setInitiative(int $id, int $initiative)
+    {
+        $req = $this->db()->prepare("
+            UPDATE characters
+            set initiative = :initiative
+            WHERE id = :id
+        ");
+        $req->bindValue(':id', $id);
+        $req->bindValue(':initiative', $initiative);
+        $req->execute();
+
+        return $req->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getApiData(string $key)
+    {
+        $url = 'https://www.dnd5eapi.co/api/'.$key;
+        $context = stream_context_create([
+            'http' => [
+                'method' => 'GET',
+                'header' => [
+                    'User-Agent: PHP'
+                ]
+            ]
+        ]);
+
+        $response = @file_get_contents($url, false, $context);
+
+        if ($response === false) {
+            // TODO: log admin
+            throw new Exception("Error al acceder a la API: " . error_get_last()['message']);
+        }
+
+        return json_decode($response, true);
+    }
+
 }

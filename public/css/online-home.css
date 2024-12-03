@@ -4,6 +4,7 @@ body {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position: center;
+    background-attachment: fixed;
 }
 .navbar {
     position: fixed;
@@ -69,8 +70,11 @@ body {
 .ability-scores.editor .col-4 {
     height: 120px;
 }
-.accordion-button {
+.accordion .accordion-button {
     background-color: #31404d;
+}
+.accordion.spells .accordion-button {
+    background-color: #115c39;
 }
 .accordion-button:not(.collapsed) {
     background-color: #182025;
@@ -137,4 +141,27 @@ body {
     #closeSidebar {
         display: block;
     }
+}
+.armor-initiative-speed {
+    background-image: url("../../public/images/blocks.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100px;
+    max-width: 292px;
+}
+.armor-initiative-speed input {
+    width: 50px;
+    text-align: center;
+    font-size: 0.8em;
+}
+.armor-initiative-speed input:first-child {
+    width: 45px;
+}
+.class-selector {
+    padding: 2px;
+}
+.resizable {
+    resize: vertical !important;
+    overflow: auto !important;
+    min-height: 100px !important;
 }

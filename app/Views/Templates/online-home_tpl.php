@@ -91,6 +91,7 @@
                         </a>
                     </div>
                     <div class="d-block">
+                        <b>Player ID:</b> <?= $data['my_character']->getId() ?> <br>
                         <b>Armor Class:</b> <?= $data['about']['armor'] ?? '' ?> <br>
                         <b>Speed:</b> <?= $data['about']['speed'] ?? '' ?> <br>
                         <b>Class:</b> <?= $data['about']['char_class'] ?? '' ?> <br>

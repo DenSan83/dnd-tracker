@@ -1,14 +1,3 @@
-<?php
-
-if (isset($_SESSION['character'])) {
-    $character = $_SESSION['character'];
-    echo 'Welcome '.$character->getName();
-    echo '<a href="'.HOST.'/logout">Logout</a>';
-}
-//    foreach ($data['characters'] as $character) {
-//        echo '<a href="login?character='.$character->getId().'">'.$character->getName().'</a>';
-//    }
-?>
 <!doctype html>
 <html lang="en">
     <head>

@@ -22,7 +22,7 @@ class HomeController extends Controller
         $turn = $this->getCurrentTurn();
 
         // Get my character image and description
-        $myCharacter = $abilities = $modifiers = $about = [];
+        $myCharacter = $abilities = $modifiers = $about = $spellsByLevel = [];
         if (isset($_SESSION['character'])) {
             $myCharacter = $_SESSION['character'];
 
@@ -38,6 +38,14 @@ class HomeController extends Controller
 
             // About
             $about = (array_key_exists('about', $myCharacter->getCharModifiers())) ? $myCharacter->getCharModifiers()['about'] : [];
+            // Spells
+            $spellsList = (array_key_exists('spells', $myCharacter->getCharModifiers())) ? $myCharacter->getCharModifiers()['spells'] : [];
+            $spellsByLevel = [];
+            foreach ($spellsList as $spellId) {
+                $thisSpell = $characterModel->getSpellById($spellId);
+                $level = ($thisSpell['level'] === 0) ? 'Cantrips' : 'Level '.$thisSpell['level'];
+                $spellsByLevel[$level][] = $thisSpell;
+            }
         }
 
         $this->view->load($homeTpl, [
@@ -46,7 +54,8 @@ class HomeController extends Controller
             'my_character' => $myCharacter,
             'abilities' => $abilities,
             'modifiers' => $modifiers,
-            'about' => $about
+            'about' => $about,
+            'spells_by_level' => $spellsByLevel
         ]);
 
         //-Aside fields:

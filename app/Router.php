@@ -11,6 +11,7 @@ class Router
 {
     private $routes = [
         '' => 'HomeController::home',
+        'api' => 'ApiController::apiManager',
         'login' => 'CharacterController::login',
         'logout' => 'CharacterController::logout',
         'admin' => 'AdminController::adminLogin',

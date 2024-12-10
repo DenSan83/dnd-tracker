@@ -3,11 +3,13 @@
 namespace app\Models;
 
 use app\Models\Entities\Character;
+use Exception;
 use PDO;
 
 class CharacterModel extends Model
 {
     private $defaultImage = 'image';
+
     public function getAll($order = 'name')
     {
         $wherePlayers = '';
@@ -46,7 +48,7 @@ class CharacterModel extends Model
             ORDER BY initiative DESC
         ");
         $req->execute();
-        return $req->fetchAll(PDO::FETCH_UNIQUE|PDO::FETCH_ASSOC);
+        return $req->fetchAll(PDO::FETCH_UNIQUE | PDO::FETCH_ASSOC);
     }
 
     public function userIdExists(int $id)
@@ -58,7 +60,7 @@ class CharacterModel extends Model
         $req->bindValue(':id', $id);
         $req->execute();
 
-        return (bool) $req->fetch(PDO::FETCH_ASSOC)['COUNT'];
+        return (bool)$req->fetch(PDO::FETCH_ASSOC)['COUNT'];
     }
 
     /**
@@ -96,7 +98,7 @@ class CharacterModel extends Model
 
     public function getApiData(string $key)
     {
-        $url = 'https://www.dnd5eapi.co/api/'.$key;
+        $url = 'https://www.dnd5eapi.co/api/' . $key;
         $context = stream_context_create([
             'http' => [
                 'method' => 'GET',
@@ -110,10 +112,33 @@ class CharacterModel extends Model
 
         if ($response === false) {
             // TODO: log admin
-            throw new Exception("Error al acceder a la API: " . error_get_last()['message']);
+            throw new Exception("Error to get to the API: " . error_get_last()['message']);
         }
 
         return json_decode($response, true);
+    }
+
+    public function findSpellByName($query)
+    {
+        $req = $this->db()->prepare("
+            SELECT id, name, details, level FROM spells
+            WHERE name LIKE :query
+        ");
+        $req->bindValue(':query', '%' . $query . '%');
+        $req->execute();
+        return $req->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getSpellById(int $id)
+    {
+        $columns = (isset(CONF['spell_columns']['conf_value'])) ? ', ' . CONF['spell_columns']['conf_value'] : '';
+        $req = $this->db()->prepare("
+            SELECT id, name $columns FROM spells
+            WHERE id = :id
+        ");
+        $req->bindValue(':id', $id);
+        $req->execute();
+        return $req->fetch(PDO::FETCH_ASSOC);
     }
 
 }

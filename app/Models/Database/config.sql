@@ -21,5 +21,6 @@ CREATE TABLE IF NOT EXISTS `config` (
 
 INSERT INTO `config` (`id`, `conf_key`, `conf_value`, `visibility`) VALUES
 (1, 'allow_login', '1', 'admin'),
-(2, 'logout_user', '0', 'admin');
+(2, 'logout_user', '0', 'admin'),
+(3, 'spell_columns', 'level, school, casting_time, duration, sp_range, sp_area, attack, save, damage_effect, ritual, concentration, vsm, verbal, somatic, material, material_list, source, details, url', 'admin');
 COMMIT;

@@ -128,53 +128,26 @@
                     <div class="d-block">
 
                         <div class="accordion spells" id="spells">
-                            <div class="accordion-item">
-                                <h3 class="accordion-header">
-                                    <button class="accordion-button collapsed text-light bg-opacity-75 rounded-0"
-                                            type="button" data-bs-toggle="collapse" data-bs-target="#spells_1" aria-controls="spells_1">
-                                        Cantrips
-                                    </button>
-                                </h3>
-                                <div id="spells_1" class="accordion-collapse collapse" data-bs-parent="#spells">
-                                    <div class="accordion-body">
-                                        <div class="d-block">
-                                            -cantrips
+                            <?php foreach ($data['spells_by_level'] as $levelName => $spells) { ?>
+                                <div class="accordion-item">
+                                    <h3 class="accordion-header">
+                                        <button class="accordion-button collapsed text-light bg-opacity-75 rounded-0"
+                                                type="button" data-bs-toggle="collapse" data-bs-target="#<?= $this->stringify($levelName) ?>"
+                                                aria-controls="<?= $this->stringify($levelName) ?>">
+                                            <?= $levelName ?>
+                                        </button>
+                                    </h3>
+                                    <div id="<?= $this->stringify($levelName) ?>" class="accordion-collapse collapse">
+                                        <div class="accordion-body">
+                                            <div class="d-block">
+                                                <?php foreach ($spells as $spell) { ?>
+                                                    - <span><?= $spell['name'] ?></span> <br>
+                                                <?php } ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <h3 class="accordion-header">
-                                    <button class="accordion-button collapsed text-light bg-opacity-75 rounded-0"
-                                            type="button" data-bs-toggle="collapse" data-bs-target="#spells_2" aria-controls="spells_2">
-                                        Level 1 Spells
-                                    </button>
-                                </h3>
-                                <div id="spells_2" class="accordion-collapse collapse" data-bs-parent="#spells">
-                                    <div class="accordion-body">
-                                        <div class="d-block">
-                                            -lvl1 spells
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <h3 class="accordion-header">
-                                    <button class="accordion-button collapsed text-light bg-opacity-75 rounded-0"
-                                            type="button" data-bs-toggle="collapse" data-bs-target="#spells_3" aria-controls="spells_3">
-                                        Level 2 Spells
-                                    </button>
-                                </h3>
-                                <div id="spells_3" class="accordion-collapse collapse" data-bs-parent="#spells">
-                                    <div class="accordion-body">
-                                        <div class="d-block">
-                                            -lvl2 spells
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php } ?>
 
                         </div>
 

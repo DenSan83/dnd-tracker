@@ -165,3 +165,11 @@ body {
     overflow: auto !important;
     min-height: 100px !important;
 }
+
+.input-spells {
+    font-size: 1.3em;
+}
+
+.suggestion .card {
+    cursor: pointer;
+}

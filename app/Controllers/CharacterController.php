@@ -56,6 +56,7 @@ class CharacterController extends Controller
             unset($_SESSION);
         }
         if (isset($_GET['id'])) {
+            $onlineModel = new OnlineModel();
             $onlineModel->setOffline($_GET['id']);
         }
 
@@ -144,7 +145,30 @@ class CharacterController extends Controller
 
     public function editSpells()
     {
-        $this->view->load('edit_spells', []);
+        $spellsIds = [];
+        if (isset($_SESSION['character']) && array_key_exists('spells', $_SESSION['character']->getCharModifiers())) {
+            $spellsIds = $_SESSION['character']->getCharModifiers()['spells'];
+            sort($spellsIds);
+        }
+        if (isset($_POST['spell'])) {
+            $spellId = $_POST['spell']['find'];
+            $spellsIds[] = $spellId;
+            $this->setCharModifiers('spells', $spellsIds);
+            // TODO log
+            // TODO: return success message
+        }
+
+        $spellsByLevel = [];
+        foreach ($spellsIds as $spellId) {
+            $thisSpell = $this->model->getSpellById($spellId);
+            $level = ($thisSpell['level'] === 0) ? 'Cantrips' : 'Level '.$thisSpell['level'];
+            $spellsByLevel[$level][] = $thisSpell;
+        }
+
+
+        $this->view->load('edit_spells', [
+            'spells_by_level' => $spellsByLevel
+        ]);
     }
 
     public function editSkills()

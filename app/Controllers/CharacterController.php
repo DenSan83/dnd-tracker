@@ -173,7 +173,25 @@ class CharacterController extends Controller
 
     public function editSkills()
     {
-        $this->view->load('edit_skills', []);
+        $skills = [];
+        if (isset($_SESSION['character']) && array_key_exists('skills', $_SESSION['character']->getCharModifiers())) {
+            $skills = $_SESSION['character']->getCharModifiers()['skills'];
+            //sort($spellsIds);
+        }
+        if (isset($_POST['skill'])) {
+            $skill = [
+                'name' => $_POST['skill']['name'],
+                'link' => $_POST['skill']['link']
+            ];
+            $skills[] = $skill;
+            $this->setCharModifiers('skills', $skills);
+            // TODO log
+            // TODO: return success message
+        }
+
+        $this->view->load('edit_skills', [
+            'skills' => $skills
+        ]);
     }
 
     public function editInventory()

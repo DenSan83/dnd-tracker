@@ -46,6 +46,8 @@ class HomeController extends Controller
                 $level = ($thisSpell['level'] === 0) ? 'Cantrips' : 'Level '.$thisSpell['level'];
                 $spellsByLevel[$level][] = $thisSpell;
             }
+            // Skills
+            $skills = (array_key_exists('skills', $myCharacter->getCharModifiers())) ? $myCharacter->getCharModifiers()['skills'] : [];
         }
 
         $this->view->load($homeTpl, [
@@ -55,7 +57,8 @@ class HomeController extends Controller
             'abilities' => $abilities,
             'modifiers' => $modifiers,
             'about' => $about,
-            'spells_by_level' => $spellsByLevel
+            'spells_by_level' => $spellsByLevel,
+            'skills' => $skills
         ]);
 
         //-Aside fields:

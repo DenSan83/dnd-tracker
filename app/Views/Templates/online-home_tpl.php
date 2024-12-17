@@ -172,9 +172,9 @@
                         </a>
                     </div>
                     <div class="d-block">
-                        - Skill list
-                        - Features
-                        - Other proficiencies & langs
+                        <?php foreach ($data['skills'] as $skill) { ?>
+                            - <a href="<?= $skill['link'] ?>" target="_blank"><?= $skill['name'] ?></a> <br>
+                        <?php } ?>
                     </div>
                 </div>
             </div>

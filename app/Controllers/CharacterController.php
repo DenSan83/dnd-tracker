@@ -69,7 +69,7 @@ class CharacterController extends Controller
             // edit/{user_id}/{subroute}/{params}
             // TODO: admin_log
             var_dump($parameters);
-        } else if (array_key_exists($parameters[0], $this->subRoutes)) {
+        } else if (isset($_SESSION['character']) && array_key_exists($parameters[0], $this->subRoutes)) {
             // edit/{subroute}/{params}
             // TODO: admin_log: (here or in every submethod?)
             $subroute = $parameters[0];

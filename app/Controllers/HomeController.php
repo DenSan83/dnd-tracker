@@ -22,7 +22,7 @@ class HomeController extends Controller
         $turn = $this->getCurrentTurn();
 
         // Get my character image and description
-        $myCharacter = $abilities = $modifiers = $about = $spellsByLevel = [];
+        $myCharacter = $abilities = $modifiers = $about = $spellsByLevel = $skills = [];
         if (isset($_SESSION['character'])) {
             $myCharacter = $_SESSION['character'];
 

@@ -6,9 +6,11 @@
         <div class="title px-5 mb-4">
             <h2>Other</h2>
         </div>
-        <div class="other editor">
+        <div class="other editor col-12">
             <form method="post">
-                <div class="row flex-nowrap justify-content-around mb-3">
+                <div class="">
+                    <textarea name="data" class="col-12" rows="10"><?= $data['data'] ?></textarea>
+                    <button type="submit" class="btn btn-success col-12 ml-3">Save</button>
                 </div>
             </form>
         </div>

@@ -123,5 +123,11 @@ class Character
         return $this;
     }
 
+    public function setData(string $data)
+    {
+        $this->data = $data;
+        return $this;
+    }
+
 
 }

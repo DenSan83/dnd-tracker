@@ -76,6 +76,8 @@ class CharacterController extends Controller
             unset($parameters[0]);
             $parameters = array_values($parameters);
             $this->{$this->subRoutes[$subroute]}($parameters);
+        } else if (!isset($_SESSION['character'])) {
+            $this->redirect('');
         } else {
             $this->redirect('404');
         }
@@ -201,6 +203,21 @@ class CharacterController extends Controller
 
     public function editOther()
     {
-        $this->view->load('edit_other', []);
+        // Get data
+        $data = [];
+        if (isset($_SESSION['character'])) {
+            $data = $_SESSION['character']->getData();
+        }
+        if (isset($_POST['data'])) {
+            $data = $_POST['data'];
+            $_SESSION['character']->setData($data);
+            $this->model->setCharData($_SESSION['character']->getId(), $data);
+            // TODO log
+            // TODO: return success message
+        }
+
+        $this->view->load('edit_other', [
+            'data' => $data
+        ]);
     }
 }

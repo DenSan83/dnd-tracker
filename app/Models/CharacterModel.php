@@ -77,9 +77,7 @@ class CharacterModel extends Model
         ");
         $req->bindValue(':id', $id);
         $req->bindValue(':char_modifiers', $charModifiers);
-        $req->execute();
-
-        return $req->fetch(PDO::FETCH_ASSOC);
+        return $req->execute();
     }
 
     public function setInitiative(int $id, int $initiative)
@@ -91,9 +89,7 @@ class CharacterModel extends Model
         ");
         $req->bindValue(':id', $id);
         $req->bindValue(':initiative', $initiative);
-        $req->execute();
-
-        return $req->fetch(PDO::FETCH_ASSOC);
+        return $req->execute();
     }
 
     public function getApiData(string $key)
@@ -139,6 +135,18 @@ class CharacterModel extends Model
         $req->bindValue(':id', $id);
         $req->execute();
         return $req->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function setCharData(int $id, string $data)
+    {
+        $req = $this->db()->prepare("
+            UPDATE characters
+            set data = :data
+            WHERE id = :id
+        ");
+        $req->bindValue(':id', $id);
+        $req->bindValue(':data', $data);
+        return $req->execute();
     }
 
 }

@@ -31,8 +31,9 @@ class CharacterController extends Controller
         // 2. if theres a request, create session
         $onlineModel = new OnlineModel();
         if (isset($_GET['character']) &&
-            array_key_exists($_GET['character'], $characters) &&
-            !$onlineModel->checkIfOnline($_GET['character']))
+            array_key_exists($_GET['character'], $characters)
+            //&& !$onlineModel->checkIfOnline($_GET['character'])
+        )
         {
             $character = $characters[$_GET['character']];
             $_SESSION['character'] = $character;

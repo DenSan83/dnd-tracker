@@ -16,6 +16,7 @@ class CharacterController extends Controller
     }
 
     private array $subRoutes = [
+        'hp' => 'editHP',
         'abilities-and-modifiers' => 'editAbilitiesModifiers',
         'about' => 'editAbout',
         'spells' => 'editSpells',
@@ -91,6 +92,40 @@ class CharacterController extends Controller
 
         $_SESSION['character']->setCharModifiers($myMods);
         $this->model->setCharModifiers($_SESSION['character']->getId(), json_encode($myMods));
+    }
+
+    public function editHP()
+    {
+        $current = $_SESSION['character']->getCurHealth();
+        $max = $_SESSION['character']->getMaxHealth();
+
+        if (isset($_POST['hp'])) {
+            $current = $_POST['hp']['current'];
+            $max = $_POST['hp']['max'];
+
+            if ($this->model->editHP($_SESSION['character']->getId(), $current, $max))
+            {
+                $_SESSION['character']->setHP($current, $max);
+            }
+            // TODO log
+            // TODO: return success message
+        }
+
+        $possibleColors = ['success', 'warning', 'danger'];
+        $percent = $current/$max *100;
+        $currentColor = $possibleColors[0];
+        if ($percent < 50 && $percent > 10) {
+            $currentColor = $possibleColors[1];
+        } else if ($percent <= 10) {
+            $currentColor = $possibleColors[2];
+        }
+
+        $this->view->load('edit_hp', [
+            'current' => $current,
+            'max' => $max,
+            'percent' => $percent,
+            'currentColor' => $currentColor,
+        ]);
     }
 
     public function editAbilitiesModifiers()

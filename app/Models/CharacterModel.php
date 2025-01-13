@@ -149,4 +149,17 @@ class CharacterModel extends Model
         return $req->execute();
     }
 
+    public function editHP(int $id, int $currentHP, int $maxHP)
+    {
+        $req = $this->db()->prepare("
+            UPDATE characters
+            set cur_health = :cur_health, max_health = :max_health
+            WHERE id = :id
+        ");
+        $req->bindValue(':id', $id);
+        $req->bindValue(':cur_health', $currentHP);
+        $req->bindValue(':max_health', $maxHP);
+        return $req->execute();
+    }
+
 }

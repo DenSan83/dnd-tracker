@@ -26,6 +26,24 @@ class HomeController extends Controller
         if (isset($_SESSION['character'])) {
             $myCharacter = $_SESSION['character'];
 
+            // HP
+            $curHealth = $myCharacter->getCurHealth();
+            $maxHealth = $myCharacter->getMaxHealth();
+            $possibleColors = ['success', 'warning', 'danger'];
+            $percent = $curHealth/$maxHealth *100;
+            $currentColor = $possibleColors[0];
+            if ($percent < 50 && $percent > 10) {
+                $currentColor = $possibleColors[1];
+            } else if ($percent <= 10) {
+                $currentColor = $possibleColors[2];
+            }
+            $hpData = [
+                'curHealth' => $curHealth,
+                'maxHealth' => $maxHealth,
+                'percent' => $percent,
+                'currentColor' => $currentColor,
+            ];
+
             // Abilities and modifiers
             $abilities = (array_key_exists('abilities', $myCharacter->getCharModifiers())) ? $myCharacter->getCharModifiers()['abilities'] : [];
             $modifiersMap = [
@@ -54,6 +72,7 @@ class HomeController extends Controller
             'character_list' => $characterList,
             'turn' => $turn,
             'my_character' => $myCharacter,
+            'hpData' => $hpData,
             'abilities' => $abilities,
             'modifiers' => $modifiers,
             'about' => $about,

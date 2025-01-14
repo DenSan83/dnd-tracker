@@ -10,19 +10,19 @@
         <form method="post" class="pb-5">
             <div class="armor-initiative-speed flex-nowrap m-auto pe-1 pt-4 row">
                 <div class="col">
-                    <input type="text" class="col" name="about[armor]" value="<?= $data['about']['armor'] ?>">
+                    <input type="text" class="col" name="about[armor]" value="<?= $data['about']['armor'] ?? 0 ?>">
                 </div>
                 <div class="col">
-                    <input type="text" class="col" name="about[initiative]" value="<?= $data['about']['initiative'] ?>">
+                    <input type="text" class="col" name="about[initiative]" value="<?= $data['about']['initiative'] ?? 0 ?>">
                 </div>
                 <div class="col">
-                    <input type="text" class="col" name="about[speed]" value="<?= $data['about']['speed'] ?>">
+                    <input type="text" class="col" name="about[speed]" value="<?= $data['about']['speed'] ?? 0 ?>">
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="char_race">Race</label><br>
-                    <input type="text" name="about[char_race]" class="w-100 text-center" value="<?= $data['about']['char_race'] ?>"/>
+                    <input type="text" name="about[char_race]" class="w-100 text-center" value="<?= $data['about']['char_race'] ?? '' ?>"/>
                 </div>
                 <div class="col-md-6">
                     <label for="char_race">Exp</label><br>
@@ -70,15 +70,15 @@
             </div>
             <div class="mb-3">
                 <label for="char_bg">Background</label><br>
-                <textarea name="about[char_bg]" class="w-100 resizable" cols="30" rows="5"><?= $data['about']['char_bg'] ?></textarea>
+                <textarea name="about[char_bg]" class="w-100 resizable" cols="30" rows="5"><?= $data['about']['char_bg'] ?? '' ?></textarea>
             </div>
             <div class="mb-3">
                 <label for="char_appearance">Appearance</label><br>
-                <textarea name="about[char_appearance]" class="w-100 resizable" cols="30" rows="5"><?= $data['about']['char_appearance'] ?></textarea>
+                <textarea name="about[char_appearance]" class="w-100 resizable" cols="30" rows="5"><?= $data['about']['char_appearance'] ?? '' ?></textarea>
             </div>
             <div class="mb-3">
                 <label for="char_backstory">Back story</label><br>
-                <textarea name="about[char_backstory]" class="w-100 resizable" cols="30" rows="5"><?= $data['about']['char_backstory'] ?></textarea>
+                <textarea name="about[char_backstory]" class="w-100 resizable" cols="30" rows="5"><?= $data['about']['char_backstory'] ?? '' ?></textarea>
             </div>
             <button type="submit" class="btn btn-success w-100">Save</button>
         </form>

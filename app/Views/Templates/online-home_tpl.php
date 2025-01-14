@@ -96,7 +96,7 @@
                         <b>Speed:</b> <?= $data['about']['speed'] ?? '' ?> <br>
                         <b>Class:</b>
                         <?php
-                            if (is_array($data['about']['char_class'])) {
+                            if (isset($data['about']['char_class']) && is_array($data['about']['char_class'])) {
                                 //echo '<br>';
                                 foreach ($data['about']['char_class'] as $charClass) {
                                     echo '<br>- ' . $charClass['name'] . ' (Lvl ' . $charClass['lvl'] . ')';

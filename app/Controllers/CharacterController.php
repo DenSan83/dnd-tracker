@@ -185,8 +185,8 @@ class CharacterController extends Controller
         $about = [];
         if (isset($_SESSION['character']) && array_key_exists('about', $_SESSION['character']->getCharModifiers())) {
             $about = $_SESSION['character']->getCharModifiers()['about'];
-            if (!is_array($about['char_class'])) $about['char_class'] = []; // temp
         }
+        if (!array_key_exists('char_class', $about) || !is_array($about['char_class'])) $about['char_class'] = []; // temp
 
         $this->view->load('edit_about', [
             'classes' => $clases,

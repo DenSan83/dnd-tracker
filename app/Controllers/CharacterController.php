@@ -158,8 +158,21 @@ class CharacterController extends Controller
 
     public function editAbout()
     {
+        $clases = $this->model->getApiData('classes')['results'];
         if (isset($_POST['about'])) {
+            $classByIndex = [];
+            foreach ($clases as $clase) {
+                $classByIndex[$clase['index']] = $clase;
+            }
             $ability = $_POST['about'];
+            foreach ($ability['char_class'] as $key => $charClass) {
+                if ($charClass['index'] === '') {
+                    unset($ability['char_class'][$key]);
+                } else {
+                    $ability['char_class'][$key]['name'] = $classByIndex[$charClass['index']]['name'];
+                }
+            }
+            $ability['char_class'] = array_values($ability['char_class']);
             $this->setCharModifiers('about', $ability);
 
             $initiative = $ability['initiative'] ? $ability['initiative'] : 0;
@@ -169,7 +182,6 @@ class CharacterController extends Controller
             // TODO: return success message
         }
 
-        $clases = $this->model->getApiData('classes')['results'];
         $about = [];
         if (isset($_SESSION['character']) && array_key_exists('about', $_SESSION['character']->getCharModifiers())) {
             $about = $_SESSION['character']->getCharModifiers()['about'];

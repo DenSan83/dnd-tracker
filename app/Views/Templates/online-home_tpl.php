@@ -94,16 +94,37 @@
                         <b>Player ID:</b> <?= $data['my_character']->getId() ?> <br>
                         <b>Armor Class:</b> <?= $data['about']['armor'] ?? '' ?> <br>
                         <b>Speed:</b> <?= $data['about']['speed'] ?? '' ?> <br>
-                        <b>Class:</b> <?= $data['about']['char_class'] ?? '' ?> <br>
+                        <b>Class:</b>
+                        <?php
+                            if (is_array($data['about']['char_class'])) {
+                                //echo '<br>';
+                                foreach ($data['about']['char_class'] as $charClass) {
+                                    echo '<br>- ' . $charClass['name'] . ' (Lvl ' . $charClass['lvl'] . ')';
+                                }
+                            } else {
+                                echo $data['about']['char_class'] ?? '';
+                            }
+
+                        ?>
+                        <br>
                         <b>Race:</b> <?= $data['about']['char_race'] ?? '' ?> <br>
+                        <b>Exp:</b> <?= $data['about']['exp'] ?? '' ?> <br>
+<!--                        Exp: 17660-->
+                        <!-- Background -->
+                        <?php if (isset($data['about']['char_bg']) && $data['about']['char_bg'] !== '') { ?>
                         <b>Background</b> <br>
                         <?= $data['about']['char_bg'] ?? '' ?> <br>
-<!--                        Exp: 17660-->
-                        <b>Apearance</b> <br>
-                        <?= $data['about']['char_appearance'] ?? '' ?><br>
-                        <b>Backstory</b> <br>
-                        <?= $data['about']['char_backstory'] ?? '' ?>
-
+                        <?php } ?>
+                        <!-- Appearance -->
+                        <?php if (isset($data['about']['char_appearance']) && $data['about']['char_appearance'] !== '') { ?>
+                            <b>Apearance</b> <br>
+                            <?= $data['about']['char_appearance'] ?? '' ?> <br>
+                        <?php } ?>
+                        <!-- Backstory -->
+                        <?php if (isset($data['about']['char_backstory']) && $data['about']['char_backstory'] !== '') { ?>
+                            <b>Backstory</b> <br>
+                            <?= $data['about']['char_backstory'] ?? '' ?> <br>
+                        <?php } ?>
 
                     </div>
                 </div>

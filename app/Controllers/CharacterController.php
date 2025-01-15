@@ -214,7 +214,7 @@ class CharacterController extends Controller
 
         $spellsByLevel = [];
         foreach ($spellsIds as $spellId) {
-            $thisSpell = $this->model->getSpellById($spellId);
+            $thisSpell = $this->model->getSpellById((int) $spellId);
             $level = ($thisSpell['level'] === 0) ? 'Cantrips' : 'Level '.$thisSpell['level'];
             $spellsByLevel[$level][] = $thisSpell;
         }

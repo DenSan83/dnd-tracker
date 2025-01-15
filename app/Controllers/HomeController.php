@@ -60,7 +60,7 @@ class HomeController extends Controller
             $spellsList = (array_key_exists('spells', $myCharacter->getCharModifiers())) ? $myCharacter->getCharModifiers()['spells'] : [];
             $spellsByLevel = [];
             foreach ($spellsList as $spellId) {
-                $thisSpell = $characterModel->getSpellById($spellId);
+                $thisSpell = $characterModel->getSpellById((int) $spellId);
                 $level = ($thisSpell['level'] === 0) ? 'Cantrips' : 'Level '.$thisSpell['level'];
                 $spellsByLevel[$level][] = $thisSpell;
             }

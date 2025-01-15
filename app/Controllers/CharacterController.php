@@ -165,6 +165,9 @@ class CharacterController extends Controller
                 $classByIndex[$clase['index']] = $clase;
             }
             $ability = $_POST['about'];
+            if (!array_key_exists('char_class', $ability)) {
+                $ability['char_class'] = [];
+            }
             foreach ($ability['char_class'] as $key => $charClass) {
                 if ($charClass['index'] === '') {
                     unset($ability['char_class'][$key]);

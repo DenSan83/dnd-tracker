@@ -108,8 +108,7 @@
                         ?>
                         <br>
                         <b>Race:</b> <?= $data['about']['char_race'] ?? '' ?> <br>
-                        <b>Exp:</b> <?= $data['about']['exp'] ?? '' ?> <br>
-<!--                        Exp: 17660-->
+                        <b>Exp:</b> <?= $data['about']['char_exp'] ?? '' ?> <br>
                         <!-- Background -->
                         <?php if (isset($data['about']['char_bg']) && $data['about']['char_bg'] !== '') { ?>
                         <b>Background</b> <br>

@@ -216,8 +216,10 @@
                         </a>
                     </div>
                     <div class="d-block">
-                        - Backpack
-                        - Equipement + armor
+                        <?php
+                        if (!empty($data['inventory']) && !empty($data['inventory']['items'])) {  ?>
+                            <?= nl2br($data['inventory']['items']) ?>
+                        <?php } ?>
                     </div>
                 </div>
             </div>

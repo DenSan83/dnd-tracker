@@ -250,7 +250,37 @@ class CharacterController extends Controller
 
     public function editInventory()
     {
-        $this->view->load('edit_inventory', []);
+        // Equipment
+        $equipmentSlots = [
+            'head', 'face', 'earrings', 'neck', 'armor', 'back', 'left-hand', 'right-hand',
+            'hands', 'ring-1', 'ring-2', 'ring-3', 'wrist-1', 'wrist-2', 'feet'];
+
+        $inventory = $this->model->getInventoryFromCharacter($_SESSION['character']->getId());
+        $usedSlots = $inventory['equipment'] ?? [];
+        if (isset($_POST['inventory'])) {
+            $inventory = $_POST['inventory'];
+            if ($inventory['equipment']['name'] !== '') {
+                $usedSlots[$inventory['equipment']['type']] = [
+                    'name' => $inventory['equipment']['name'],
+                    'description' => $inventory['equipment']['description'],
+                ];
+                unset($equipmentSlots[array_search($inventory['equipment']['type'], $equipmentSlots)]);
+            }
+            $inventory['equipment'] = $usedSlots;
+            $this->model->setCharInventory($_SESSION['character']->getId(), json_encode($inventory));
+        }
+
+        if (isset($_POST['unset'])) {
+            foreach ($_POST['unset'] as $item) {
+                unset($inventory['equipment'][$item]);
+            }
+            $this->model->setCharInventory($_SESSION['character']->getId(), json_encode($inventory));
+        }
+
+        $this->view->load('edit_inventory', [
+            'inventory' => $inventory,
+            'equipment_slots' => $equipmentSlots
+        ]);
     }
 
     public function editOther()

@@ -26,4 +26,5 @@ CREATE TABLE `characters` (
 --
 ALTER TABLE `characters`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+ALTER TABLE `characters` ADD `inventory` TEXT NULL AFTER `data`;
 COMMIT;

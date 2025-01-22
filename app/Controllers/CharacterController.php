@@ -206,7 +206,16 @@ class CharacterController extends Controller
         }
         if (isset($_POST['spell'])) {
             $spellId = $_POST['spell']['find'];
-            $spellsIds[] = $spellId;
+            if ('' !== $spellId) {
+                $spellsIds[] = $spellId;
+            }
+
+            // temp fix
+            foreach ($spellsIds as $key => $id) {
+                if ('' === $id) unset($spellsIds[$key]);
+            }
+            // end temp fix
+
             $this->setCharModifiers('spells', $spellsIds);
             // TODO log
             // TODO: return success message

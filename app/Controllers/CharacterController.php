@@ -206,15 +206,19 @@ class CharacterController extends Controller
         }
         if (isset($_POST['spell'])) {
             $spellId = $_POST['spell']['find'];
-            if ('' !== $spellId) {
+            if ('' !== $spellId && !in_array($spellId, $spellsIds)) {
                 $spellsIds[] = $spellId;
             }
 
-            // temp fix
-            foreach ($spellsIds as $key => $id) {
-                if ('' === $id) unset($spellsIds[$key]);
+            ///////////// temp fix
+            $tempSpellsArr = [];
+            foreach ($spellsIds as $id) {
+                if ('' !== $id && !in_array($id, $tempSpellsArr)) { // get rid of doubles and empty values
+                    $tempSpellsArr[] = $id;
+                }
             }
-            // end temp fix
+            $spellsIds = $tempSpellsArr;
+            ///////////// end temp fix
 
             $this->setCharModifiers('spells', $spellsIds);
             // TODO log

@@ -11,13 +11,13 @@
                 <div class="justify-content-around mb-3">
                     <div class="mb-3">
                         <label for="char_bg">Equipment</label><br>
-                        <div class="text-left" id='equipment-list'>
+                        <ul class="text-start" id='equipment-list'>
                             <?php
                             if (!empty($data['inventory']) && !empty($data['inventory']['equipment'])) {
                                 foreach ($data['inventory']['equipment'] as $slot => $equipment) { ?>
-                                        <div class="eq-<?= $slot ?>">
-                                            <b><?= $slot ?> -
-                                                <?= $equipment['name'] ?></b>:
+                                        <li class="eq-<?= $slot ?>">
+                                            [<?= ucfirst($slot) ?>]
+                                            <b><?= $equipment['name'] ?></b>:
                                             <?= $equipment['description'] ?>
                                             <span class="text-danger" data-key="<?= $slot ?>">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
@@ -25,11 +25,11 @@
                                                   <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
                                                 </svg>
                                             </span>
-                                        </div>
+                                        </li>
                                 <?php }
                             }
                             ?>
-                        </div>
+                        </ul>
                         <div class="char_equipment flex-nowrap m-auto pe-1 pt-4 row">
                             <div class="col-3 px-0">
                                 <label>Type</label><br>
@@ -39,7 +39,6 @@
                                         <option><?= $slot ?></option>
                                     <?php } ?>
                                 </select>
-<!--                                <input type="text" class="col" name="inventory[equipment][0][type]" value="--><?php //= $data['about']['armor'] ?? 0 ?><!--">-->
                             </div>
                             <div class="col-3">
                                 Name <br>

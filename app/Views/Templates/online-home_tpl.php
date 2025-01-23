@@ -293,11 +293,8 @@
                         if (!empty($data['inventory']) && !empty($data['inventory']['equipment'])) {
                             foreach ($data['inventory']['equipment'] as $slot => $equipment) { ?>
                                 <li>
-                                    <b>
-                                        <span style="text-transform: capitalize;">
-                                            <?= $slot ?> >>
-                                        </span>
-                                        <?= $equipment['name'] ?></b>:
+                                    [<?= ucfirst($slot) ?>]
+                                    <b><?= $equipment['name'] ?></b>:
                                     <?= $equipment['description'] ?>
                                 </li>
                             <?php }

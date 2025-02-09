@@ -67,6 +67,8 @@ class Router
         define('ROOT', $_ENV['ROOT']);
         $confModel = new ConfModel();
         define('CONF', $confModel->getConf());
+        include_once __DIR__ . '/helper/iconList.php';
+        define('ICONS', $iconList);
     }
 
 }

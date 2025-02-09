@@ -1,0 +1,65 @@
+.overflow-x-scroll {
+    overflow-x: scroll;
+}
+ul {
+    list-style-type: none;
+}
+
+li {
+    display: inline-block;
+}
+
+input.round-check[type="radio"][id^="mdi"] {
+    display: none;
+}
+
+label.label-check {
+    border: 1px solid #fff;
+    padding: 10px;
+    display: block;
+    position: relative;
+    margin: 10px;
+    cursor: pointer;
+}
+
+label.label-check:before {
+    background-color: white;
+    color: white;
+    content: " ";
+    display: block;
+    border-radius: 50%;
+    border: 1px solid grey;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    line-height: 23px;
+    transition-duration: 0.4s;
+    transform: scale(0);
+}
+
+img.icon-image {
+    height: 100px;
+    width: 100px;
+    transition-duration: 0.2s;
+    transform-origin: 50% 50%;
+    object-fit: contain;
+}
+
+.round-check:checked + label.label-check {
+    border-color: #ddd;
+}
+
+.round-check:checked + label.label-check:before {
+    content: "✓";
+    background-color: grey;
+    transform: scale(1);
+}
+
+.round-check:checked + label.label-check img {
+    transform: scale(0.9);
+    box-shadow: 0 0 5px #333;
+    z-index: -1;
+}

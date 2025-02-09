@@ -22,7 +22,8 @@ class Controller
         }
 
         if (!empty($sessionData)) $_SESSION['return'] = $sessionData;
-        if (!empty($routeParams)) $params = '?'.$routeParams;
+        $params = '';
+        if (!empty($routeParams)) $params = $routeParams;
         header('Location: '. HOST . '/' . $route . $params);
         exit;
     }

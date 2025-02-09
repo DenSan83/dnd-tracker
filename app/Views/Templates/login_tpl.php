@@ -16,7 +16,7 @@
         </div>
         <div class="container">
             <div class="row character-block">
-                <?php foreach ($data['characters'] as $character) { ?>
+                <?php foreach ($data['characters']['players'] as $character) { ?>
                     <div class="col-6 col-md-3 p-2">
                         <a href="login?character=<?= $character->getId() ?>">
                             <div class="card character-card">
@@ -30,7 +30,22 @@
                             </div>
                         </a>
                     </div>
-                <?php } ?>
+                <?php }
+                $dm = $data['characters']['dm']; ?>
+                    <div class="col-6 col-md-3 p-2">
+                        <a href="login?character=<?= $dm->getId() ?>">
+                            <div class="card character-card">
+                                <div class="char-wrapper">
+                                    <img src="./public/images/frame.webp" class="frame">
+                                    <img src="./uploads/<?= $dm->getImage() ?>" class="avatar">
+                                </div>
+                                <span class="text-success">
+                                        <?= $dm->getName() ?>
+                                    </span>
+                            </div>
+                        </a>
+                    </div>
+
             </div>
         </div>
 

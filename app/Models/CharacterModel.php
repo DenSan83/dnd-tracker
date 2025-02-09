@@ -41,6 +41,59 @@ class CharacterModel extends Model
         return $characters;
     }
 
+    public function getEnemies()
+    {
+        $req = $this->db()->prepare("
+            SELECT * FROM characters WHERE type = 'enemy'
+        ");
+        $req->execute();
+        $results = $req->fetchAll(PDO::FETCH_ASSOC);
+        $enemies = [];
+        foreach ($results as $result) {
+            $enemies[$result['id']] = new Character(
+                $result['id'],
+                $result['name'],
+                $result['image'] ?? $this->defaultImage,
+                $result['data'],
+                $result['max_health'],
+                $result['cur_health'],
+                $result['char_modifiers'],
+                $result['initiative'],
+                $result['role'],
+                $result['type'],
+                $result['owner'],
+            );
+        }
+
+        return $enemies;
+    }
+
+    public function getEnemyById(int $id)
+    {
+        $req = $this->db()->prepare("
+            SELECT * FROM characters                
+            WHERE id = :id
+        ");
+        $req->bindValue(':id', $id);
+        $req->execute();
+        $result = $req->fetch(PDO::FETCH_ASSOC);
+        //$characters = [];
+        return new Character(
+            $result['id'],
+            $result['name'],
+            $result['image'] ?? $this->defaultImage,
+            $result['data'],
+            $result['max_health'],
+            $result['cur_health'],
+            $result['char_modifiers'],
+            $result['initiative'],
+            $result['role'],
+            $result['type'],
+            $result['owner'],
+        );
+
+        //return $character;
+    }
     public function getInitiativeList()
     {
         $req = $this->db()->prepare("
@@ -184,6 +237,36 @@ class CharacterModel extends Model
         $req->bindValue(':id', $id);
         $req->bindValue(':inventory', $inventory);
         return $req->execute();
+    }
+
+    public function createCharacter(string $name, string $role, string $type, string $owner, string $image = '')
+    {
+        $req = $this->db()->prepare("
+            INSERT INTO characters(name, role, type, owner, image, max_health, cur_health, data, char_modifiers) 
+            VALUES(:name, :role, :type, :owner, :image, 0, 0, '', '')
+        ");
+        $req->bindValue(':name', $name);
+        $req->bindValue(':role', $role);
+        $req->bindValue(':type', $type);
+        $req->bindValue(':owner', $owner);
+        $req->bindValue(':image', $image);
+        $req->execute();
+
+        return (int) $this->db()->lastInsertId();
+    }
+
+    public function editCharacter(int $id, string $name, string $image = '')
+    {
+        $req = $this->db()->prepare("
+            UPDATE characters
+            SET name = :name, image = :image
+            WHERE id = :id
+        ");
+        $req->bindValue(':id', $id);
+        $req->bindValue(':name', $name);
+        $req->bindValue(':image', $image);
+        $req->execute();
+
     }
 
 }

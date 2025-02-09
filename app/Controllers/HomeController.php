@@ -2,6 +2,7 @@
 
 namespace app\Controllers;
 
+use app\enum\Role;
 use app\Models\CharacterModel;
 
 class HomeController extends Controller
@@ -22,7 +23,7 @@ class HomeController extends Controller
         $turn = $this->getCurrentTurn();
 
         // Get my character image and description
-        $myCharacter = $abilities = $modifiers = $about = $spellsByLevel = $skills = $inventory = [];
+        $myCharacter = $abilities = $modifiers = $about = $spellsByLevel = $skills = $inventory = $enemies = [];
         if (isset($_SESSION['character'])) {
             $myCharacter = $_SESSION['character'];
 
@@ -69,6 +70,10 @@ class HomeController extends Controller
 
             // Inventory
             $inventory = $characterModel->getInventoryFromCharacter($_SESSION['character']->getId());
+
+            if (Role::isDM($myCharacter->getRole())) {
+                $enemies = $characterModel->getEnemies();
+            }
         }
 
         $this->view->load($homeTpl, [
@@ -82,26 +87,11 @@ class HomeController extends Controller
             'spells_by_level' => $spellsByLevel,
             'skills' => $skills,
             'inventory' => $inventory,
+            'enemies' => $enemies
         ]);
 
-        //-Aside fields:
-
-        //-Stats
-        // Ability scores + modifiers(str,dex,con,int,wis,cha),
-
-        // About:(class,race,bg,alignment), appearance, backstory,
-        // Spells: (cantrip, lvl1, lvl2),
-
-        // skills,
-        // features (by class) + feats
-        // "other proficiencies & languages",
-
-        //-Backpack:
-        // inventory,
-
-        //-Sword
-        // equipment+armor,
-
+        //- Missing Aside fields:
+        // Spells: (cantrip, lvl1, lvl2), spell slots
     }
 
     public function getCurrentTurn()

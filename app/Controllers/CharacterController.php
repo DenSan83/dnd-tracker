@@ -27,16 +27,16 @@ class CharacterController extends Controller
     public function login($data)
     {
         // 1. find all characters and serve them
-        $characters = $this->model->getAll();
+        $characters = $this->getLoginUsers();
 
         // 2. if theres a request, create session
         $onlineModel = new OnlineModel();
         if (isset($_GET['character']) &&
-            array_key_exists($_GET['character'], $characters)
-            //&& !$onlineModel->checkIfOnline($_GET['character'])
+            (array_key_exists($_GET['character'], $characters['players'])
+            || $_GET['character'] == $characters['dm']->getId())
         )
         {
-            $character = $characters[$_GET['character']];
+            $character = $characters['players'][$_GET['character']] ?? $characters['dm'];
             $_SESSION['character'] = $character;
             // set online
             $onlineModel->setOnline($character->getId(), $character->getName());
@@ -44,8 +44,29 @@ class CharacterController extends Controller
             $this->redirect('');
         }
 
-        $data = ['characters' => $characters];
-        $this->view->load('login', $data);
+        $this->view->load('login', [
+            'characters' => $characters
+        ]);
+    }
+
+    private function getLoginUsers()
+    {
+        $characters = $this->model->getAll();
+        $usersList = [];
+        $dm = null;
+        foreach ($characters as $character) {
+            if ($character->getRole() === 'user') {
+                $usersList[$character->getId()] = $character;
+            }
+            if ($character->getRole() === 'dm') {
+                $dm = $character;
+            }
+        }
+
+        $list['players'] = $usersList;
+        $list['dm'] = $dm;
+
+        return $list;
     }
 
     public function logout()

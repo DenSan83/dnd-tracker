@@ -16,6 +16,7 @@ class Router
         'logout' => 'CharacterController::logout',
         'admin' => 'AdminController::adminLogin',
         'edit' => 'CharacterController::edit',
+        'dm' => 'DMController::dmRoutes',
         '404' => 'Controller::error404',
     ];
     private $publicRoutes = ['', 'logout', 'admin'];
@@ -63,6 +64,7 @@ class Router
     public function globalVars()
     {
         define('HOST', $_ENV['HOST']);
+        define('ROOT', $_ENV['ROOT']);
         $confModel = new ConfModel();
         define('CONF', $confModel->getConf());
     }

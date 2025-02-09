@@ -104,6 +104,13 @@ body {
     drop-shadow(20px 15px 5px rgba(0, 0, 0, 0.2));
     z-index: 1;
 }
+img.icon-image {
+    height: 100px;
+    width: 100px;
+    transition-duration: 0.2s;
+    transform-origin: 50% 50%;
+    object-fit: contain;
+}
 .equipment-btn {
     position: absolute;
     left: 35px;

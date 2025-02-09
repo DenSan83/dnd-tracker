@@ -92,16 +92,45 @@ use app\enum\Role;
     <div class="turns px-5">
         <div class="row d-flex flex-nowrap">
             <?php foreach (array_reverse($data['character_list']) as $character) {
+                $possibleColors = ['success', 'warning', 'danger'];
+                $charPercent = $character->getCurHealth()/$character->getMaxHealth() *100;
+                $curColor = $possibleColors[0];
+                if ($charPercent < 50 && $charPercent > 10) {
+                    $curColor = $possibleColors[1];
+                } else if ($charPercent <= 10) {
+                    $curColor = $possibleColors[2];
+                }
+
                 if (Role::isNpc($character->getRole())) {
+                    $hpIsVisible = json_decode($character->getData(), true)['hp_is_visible'];
                     $show = json_decode($character->getData(), true)['show'];
                     if ($show === 'true'){ ?>
                     <div class="col turn-<?= $character->getId() ?>">
-                        <span>(<?= $character->getInitiative() ?>)</span>
+                        <?php if ($hpIsVisible) { ?>
+                        <div class="progress charlist-hp" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar bg-<?= $curColor ?> progress-bar-animated"
+                                 style="width: <?= $charPercent ?>%"></div>
+                        </div>
+                        <?php } else { ?>
+                            <div class="progress charlist-hp" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar bg-secondary progress-bar-animated"
+                                     style="width: 100%">?</div>
+                            </div>
+                        <?php }  ?>
+                        <div class="initiative-circle"><?= $character->getInitiative() ?></div>
+                        <span>---</span>
                         <img src="<?= HOST . '/' . $character->getImage() ?>"/>
                     </div>
                 <?php }} else { ?>
                 <div class="col turn-<?= $character->getId() ?>">
-                    <span>(<?= $character->getInitiative() ?>)</span>
+                    <div class="progress charlist-hp" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar bg-<?= $curColor ?> progress-bar-animated"
+                             style="width: <?= $charPercent ?>%"></div>
+                    </div>
+                    <div class="initiative-circle">
+                        <?= $character->getInitiative() ?>
+                    </div>
+                    <span>---</span>
                     <img src="./uploads/<?= $character->getImage() ?>"/>
                 </div>
             <?php }} ?>

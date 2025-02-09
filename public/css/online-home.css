@@ -122,16 +122,34 @@ img.icon-image {
     overflow-x: auto;
 }
 .turns .col {
-    border: 1px solid green;
+    border-bottom: 1px solid green;
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+.turns .col .initiative-circle {
+    display: flex;
+    border-radius: 50%!important;
+    background-color: #fff;
+    float: left;
+    width: 26px;
+    height: 26px;
+    justify-content: center;
+    position: absolute;
+    left: -2px;
+    border: 1px solid green;
+}
+.turns .col .charlist-hp {
+    position: absolute;
+    width: 82%;
+    top: 4px;
 }
 .turns .col img {
-    /*max-width: 100%;*/
     overflow: hidden;
     max-height: 54px;
     object-fit: cover;
     object-position: center top;
+    background-color: #ffffff66;
 }
 @media (min-width: 993px) {
     .content-home {

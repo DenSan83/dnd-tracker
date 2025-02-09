@@ -54,7 +54,7 @@
                 <?php foreach ($data['enemy_uploaded_icons'] as $key => $icon) { ?>
                     <li></li>
                 <?php } ?>
-                <?php foreach ($data['enemy_def_icons'] as $key => $icon) { var_dump('icon: '. $icon); ?>
+                <?php foreach ($data['enemy_def_icons'] as $key => $icon) { ?>
                     <li>
                         <input type="radio" class="round-check" name="enemy[image]" id="mdi<?= $key ?>" value="<?= $data['def_icons_route']. $icon ?>"
                             <?php

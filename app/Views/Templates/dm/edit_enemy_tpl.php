@@ -75,8 +75,8 @@
         </div>
         <div class="mb-2">
             <input type="hidden" name="enemy[id]" value="<?= isset($data['enemy'])? $data['enemy']->getId() : '';  ?>">
-            <span>Name</span>
-            <input type="text" name="enemy[name]" class="w-100" value="<?php if (isset($data['enemy'])) { echo $data['enemy']->getName(); } ?>" />
+            <span>Name<span class="text-danger">*</span> </span>
+            <input type="text" required name="enemy[name]" class="w-100" value="<?php if (isset($data['enemy'])) { echo $data['enemy']->getName(); } ?>" />
         </div>
         <div class="row">
             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">

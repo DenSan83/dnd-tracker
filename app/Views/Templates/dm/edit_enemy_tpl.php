@@ -1,4 +1,3 @@
-<?php use app\enum\Role; ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

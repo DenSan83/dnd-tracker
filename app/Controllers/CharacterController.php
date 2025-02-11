@@ -2,6 +2,7 @@
 
 namespace app\Controllers;
 
+use app\enum\Role;
 use app\Models\CharacterModel;
 use app\Models\OnlineModel;
 
@@ -55,10 +56,10 @@ class CharacterController extends Controller
         $usersList = [];
         $dm = null;
         foreach ($characters as $character) {
-            if ($character->getRole() === 'user') {
+            if ($character->getRole() === Role::User->value) {
                 $usersList[$character->getId()] = $character;
             }
-            if ($character->getRole() === 'dm') {
+            if ($character->getRole() === Role::DM->value) {
                 $dm = $character;
             }
         }

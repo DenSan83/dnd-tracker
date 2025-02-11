@@ -71,7 +71,7 @@ class HomeController extends Controller
             // Inventory
             $inventory = $characterModel->getInventoryFromCharacter($_SESSION['character']->getId());
 
-            if (Role::isDM($myCharacter->getRole())) {
+            if ($myCharacter->getRole() === Role::DM->value) {
                 $enemies = $characterModel->getEnemies();
             }
         }

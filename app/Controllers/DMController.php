@@ -27,7 +27,7 @@ class DMController extends Controller
     public function dmRoutes($parameters)
     {
         if (isset($_SESSION['character'])
-            && Role::isDM($_SESSION['character']->getRole())
+            && $_SESSION['character']->getRole() === Role::DM->value
             && array_key_exists($parameters[0], $this->subRoutes)) {
             // dm/{subroute}/{params}
             // TODO: admin_log: (here or in every submethod?)

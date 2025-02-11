@@ -32,7 +32,7 @@ use app\enum\Role;
 
 <?php
     // Sidebar
-    if (Role::isDM($data['my_character']->getRole())) {
+    if ($data['my_character']->getRole() === Role::DM->value) {
         include_once 'partials/dm-home-sidebar_tpl.php';
     } else {
         include_once 'partials/online-home-sidebar_tpl.php';
@@ -42,7 +42,7 @@ use app\enum\Role;
 <div class="content content-home text-center">
     <div class="title px-5">
         <h2><?= $data['my_character']->getName() ?></h2>
-        <?php if (!Role::isDM($data['my_character']->getRole())) { ?>
+        <?php if ($data['my_character']->getRole() !== Role::DM->value) { ?>
             Max HP: <?= $data['hpData']['maxHealth'] ?>
             <?php $curHealth = $data['hpData']['curHealth']; ?>
             <a href="<?= HOST ?>/edit/hp" class="text-decoration-none">
@@ -55,7 +55,7 @@ use app\enum\Role;
     </div>
     <div class="container contains-image position-relative">
         <img src="./uploads/<?= $data['my_character']->getImage() ?>" class="character_image">
-        <?php if (!Role::isDM($data['my_character']->getRole())) { ?>
+        <?php if ($data['my_character']->getRole() !== Role::DM->value) { ?>
             <img src="./public/images/armor.png" class="btn btn-outline-secondary equipment-btn" data-bs-toggle="modal" data-bs-target="#equipmetModal">
             <!-- Modal equipment -->
             <div class="modal fade" id="equipmetModal" tabindex="-1" aria-labelledby="equipmetModalLabel" aria-hidden="true">
@@ -101,7 +101,7 @@ use app\enum\Role;
                     $curColor = $possibleColors[2];
                 }
 
-                if (Role::isNpc($character->getRole())) {
+                if ($character->getRole() === Role::NPC->value) {
                     $hpIsVisible = json_decode($character->getData(), true)['hp_is_visible'];
                     $show = json_decode($character->getData(), true)['show'];
                     if ($show === 'true'){ ?>
@@ -116,7 +116,7 @@ use app\enum\Role;
                                 <div class="progress-bar bg-secondary progress-bar-animated"
                                      style="width: 100%">?</div>
                             </div>
-                        <?php }  ?>
+                        <?php } ?>
                         <div class="initiative-circle"><?= $character->getInitiative() ?></div>
                         <span>---</span>
                         <img src="<?= HOST . '/' . $character->getImage() ?>"/>

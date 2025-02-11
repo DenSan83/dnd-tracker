@@ -36,9 +36,9 @@
                         <select name="about[char_class][<?= $key ?>][index]" class="w-100 text-center class-selector">
                             <option value="">--- Select a class ---</option>
                             <?php foreach ($data['classes'] as $class) { ?>
-                                <option value="<?= $class['index'] ?>"
-                                    <?php if (isset($data['about']['char_class'][$key]['index']) && $data['about']['char_class'][$key]['index'] === $class['index']) { echo 'selected'; } ?>
-                                ><?= $class['name'] ?></option>
+                                <option value="<?= $class->value ?>"
+                                    <?php if (isset($data['about']['char_class'][$key]['index']) && $data['about']['char_class'][$key]['index'] === $class->value) { echo 'selected'; } ?>
+                                ><?= $class->name ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -58,7 +58,7 @@
                         <select name="about[char_class][0][index]" class="w-100 text-center class-selector">
                             <option value="">--- Select a class ---</option>
                             <?php foreach ($data['classes'] as $class) { ?>
-                                <option value="<?= $class['index'] ?>"><?= $class['name'] ?></option>
+                                <option value="<?= $class->value ?>"><?= $class->name ?></option>
                             <?php } ?>
                         </select>
                     </div>

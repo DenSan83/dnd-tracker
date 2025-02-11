@@ -2,6 +2,7 @@
 
 namespace app\Controllers;
 
+use app\enum\CharClass;
 use app\enum\Role;
 use app\Models\CharacterModel;
 use app\Models\OnlineModel;
@@ -180,11 +181,11 @@ class CharacterController extends Controller
 
     public function editAbout()
     {
-        $clases = $this->model->getApiData('classes')['results'];
+        $classList = CharClass::cases();
         if (isset($_POST['about'])) {
             $classByIndex = [];
-            foreach ($clases as $clase) {
-                $classByIndex[$clase['index']] = $clase;
+            foreach ($classList as $curClass) {
+                $classByIndex[$curClass->value] = $curClass;
             }
             $ability = $_POST['about'];
             if (!array_key_exists('char_class', $ability)) {
@@ -194,7 +195,7 @@ class CharacterController extends Controller
                 if ($charClass['index'] === '') {
                     unset($ability['char_class'][$key]);
                 } else {
-                    $ability['char_class'][$key]['name'] = $classByIndex[$charClass['index']]['name'];
+                    $ability['char_class'][$key]['name'] = $classByIndex[$charClass['index']]->name;
                 }
             }
             $ability['char_class'] = array_values($ability['char_class']);
@@ -214,7 +215,7 @@ class CharacterController extends Controller
         if (!array_key_exists('char_class', $about) || !is_array($about['char_class'])) $about['char_class'] = []; // temp
 
         $this->view->load('edit_about', [
-            'classes' => $clases,
+            'classes' => $classList,
             'about' => $about
         ]);
     }

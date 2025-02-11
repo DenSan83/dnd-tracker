@@ -145,7 +145,7 @@ class CharacterModel extends Model
         return $req->execute();
     }
 
-    public function getApiData(string $key)
+    public function getApiData(string $key) // Not reliable
     {
         $url = 'https://www.dnd5eapi.co/api/' . $key;
         $context = stream_context_create([

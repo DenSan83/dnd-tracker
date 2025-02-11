@@ -11,7 +11,7 @@
 
 <nav class="navbar">
     <div class="container">
-        <a class="navbar-brand text-light fw-bold" href="<?= HOST ?>/">D&D Tracker</a>
+        <a class="navbar-brand text-light fw-bold" href="<?= HOST ?>">D&D Tracker</a>
         <div class="" id="navbarNav">
             <ul class="navbar-nav ms-auto d-flex flex-row">
                 <li class="nav-item">

@@ -56,6 +56,9 @@ class DMController extends Controller
         }
 
         if (isset($_POST['enemy'])) {
+            if (empty($_POST['enemy']['name'])) {
+                $this->redirect('dm', '/new-enemy');
+            }
             $this->saveEnemyData($_POST['enemy']);
         }
 
@@ -110,8 +113,8 @@ class DMController extends Controller
         }
 
         // Add features
-        $this->model->editHP($enemyId, $enemyData['cur_health'], $enemyData['max_health']);
-        $this->model->setInitiative($enemyId, $enemyData['initiative']);
+        $this->model->editHP($enemyId, (int)$enemyData['cur_health'], (int)$enemyData['max_health']);
+        $this->model->setInitiative($enemyId, (int)$enemyData['initiative']);
         $this->model->setCharModifiers($enemyId, json_encode($enemyData['mod']));
         $this->model->setCharData($enemyId, json_encode($enemyData['data']));
         $this->model->setCharInventory($enemyId, json_encode($enemyData['inventory']));

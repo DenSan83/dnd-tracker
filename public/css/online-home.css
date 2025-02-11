@@ -119,6 +119,8 @@ img.icon-image {
 }
 .turns {
     height: 80px;
+}
+.turns .row {
     overflow-x: auto;
 }
 .turns .col {
@@ -126,6 +128,7 @@ img.icon-image {
     display: flex;
     flex-direction: column;
     position: relative;
+    min-width: 96px;
 }
 .turns .col .initiative-circle {
     display: flex;

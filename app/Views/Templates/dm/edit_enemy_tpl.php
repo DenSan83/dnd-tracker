@@ -38,11 +38,11 @@
             $action = 'Edit';
         }
         ?>
-        <h2><?= $action ?> Enemy</h2>
+        <h2><?= $data['action'] ?> Enemy</h2>
     </div>
     <?php
         $route = '/dm/new-enemy';
-        if (isset($data['enemy'])) {
+        if (isset($data['action']) && $data['action'] == 'Edit') {
             $route = '/dm/edit-enemy/'.$data['enemy']->getId();
         }
     ?>
@@ -171,7 +171,7 @@
             <textarea name="enemy[data][notes]" rows="4" class="w-100"><?php if (isset($data['enemy_data'])) { echo $data['enemy_data']['notes']; } ?></textarea>
         </div>
 
-        <button type="submit" class="btn btn-secondary w-100 mt-3 mb-5"><?= $action ?></button>
+        <button type="submit" class="btn btn-secondary w-100 mt-3 mb-5"><?= $data['action'] ?></button>
     </form>
 </div>
 

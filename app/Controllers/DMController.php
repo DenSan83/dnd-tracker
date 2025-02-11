@@ -63,6 +63,7 @@ class DMController extends Controller
         }
 
         $data['enemies'] = $this->model->getEnemies();
+        $data['action'] = 'Create';
 
         $this->view->load('dm/edit_enemy', $data);
     }
@@ -98,7 +99,43 @@ class DMController extends Controller
             'enemies' => $enemies,
             'enemy' => $enemy,
             'enemy_data' => $enemyData,
-            'enemy_inventory' => $enemyInventory
+            'enemy_inventory' => $enemyInventory,
+            'action' => 'Edit'
+        ]);
+    }
+
+    public function cloneEnemy($params)
+    {
+        $enemies = $this->model->getEnemies();
+        $enemy_uploaded_icons = [];
+        $uploaded_icons_route = '/uploads/enemy-icons/';
+        $enemy_def_icons = [];
+        $def_icons_route = '/public/images/enemy-icons/';
+        for ($i = 1; $i <= 10; $i++) {
+            $enemy_def_icons[] = 'mon' . sprintf('%02d', $i) . '.png';
+        }
+
+        $enemyId = (int)$params[0];
+        $enemy = $this->model->getEnemyById($enemyId);
+        $enemyData = json_decode($enemy->getData(), true);
+        $enemyInventory = $this->model->getInventoryFromCharacter($enemy->getId());
+
+        if (isset($_POST['enemy'])) {
+            $this->saveEnemyData($_POST['enemy']);
+
+            $this->redirect('');
+        }
+
+        $this->view->load('dm/edit_enemy', [
+            'enemy_uploaded_icons' => $enemy_uploaded_icons,
+            'uploaded_icons_route' => $uploaded_icons_route,
+            'enemy_def_icons' => $enemy_def_icons,
+            'def_icons_route' => $def_icons_route,
+            'enemies' => $enemies,
+            'enemy' => $enemy,
+            'enemy_data' => $enemyData,
+            'enemy_inventory' => $enemyInventory,
+            'action' => 'Create'
         ]);
     }
 

@@ -29,7 +29,7 @@
     </div>
 </nav>
 
-<?php include_once getcwd(). '\app\Views\Templates\partials\dm-home-sidebar_tpl.php'; ?>
+<?php include_once getcwd(). '/app/Views/Templates/partials/dm-home-sidebar_tpl.php'; ?>
 
 <div class="content content-home text-center">
     <div class="title px-5">

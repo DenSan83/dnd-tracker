@@ -97,8 +97,8 @@
             <div class="col-4 d-flex flex-column align-items-start">
                 <span>HP</span>
                 <div class="d-flex">
-                    <input type="text" name="enemy[max_health]" class="w-50" min="1" placeholder="Maximum" value="<?php if (isset($data['enemy'])) { echo $data['enemy']->getMaxHealth(); } else { echo 1; } ?>"/>
-                    <input type="text" name="enemy[cur_health]" class="w-50" min="0" placeholder="Current" value="<?php if (isset($data['enemy'])) { echo $data['enemy']->getCurHealth(); } else { echo 1; } ?>" />
+                    <input type="number" name="enemy[max_health]" class="w-50" min="1" placeholder="Maximum" value="<?php if (isset($data['enemy'])) { echo $data['enemy']->getMaxHealth(); } else { echo 1; } ?>"/>
+                    <input type="number" name="enemy[cur_health]" class="w-50" min="0" placeholder="Current" value="<?php if (isset($data['enemy'])) { echo $data['enemy']->getCurHealth(); } else { echo 1; } ?>" />
                 </div>
                 <div class="d-flex mb-2">
                     <input type="checkbox" name="enemy[hp_is_visible]" id="hp-is-visible" class="me-2"
@@ -109,7 +109,7 @@
                 </div>
 
                 <span>Initiative</span>
-                <input type="text" name="enemy[initiative]" class="w-100" min="0" value="<?php if (isset($data['enemy'])) { echo $data['enemy']->getInitiative(); } else { echo 1; } ?>" />
+                <input type="number" name="enemy[initiative]" class="w-100" min="0" value="<?php if (isset($data['enemy'])) { echo $data['enemy']->getInitiative(); } else { echo 1; } ?>" />
                 <span>Race</span>
                 <input type="text" name="enemy[data][race]" class="w-100" value="<?php if (isset($data['enemy_data'])) { echo $data['enemy_data']['race']; } ?>" />
                 <span>Type</span>

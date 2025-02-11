@@ -77,7 +77,8 @@ class CharacterModel extends Model
         $req->bindValue(':id', $id);
         $req->execute();
         $result = $req->fetch(PDO::FETCH_ASSOC);
-        //$characters = [];
+
+        if (!$result) { return false; }
         return new Character(
             $result['id'],
             $result['name'],
@@ -91,9 +92,8 @@ class CharacterModel extends Model
             $result['type'],
             $result['owner'],
         );
-
-        //return $character;
     }
+
     public function getInitiativeList()
     {
         $req = $this->db()->prepare("
@@ -252,7 +252,7 @@ class CharacterModel extends Model
         $req->bindValue(':image', $image);
         $req->execute();
 
-        return (int) $this->db()->lastInsertId();
+        return (int)$this->db()->lastInsertId();
     }
 
     public function editCharacter(int $id, string $name, string $image = '')
@@ -267,6 +267,22 @@ class CharacterModel extends Model
         $req->bindValue(':image', $image);
         $req->execute();
 
+    }
+
+    public function deleteEnemy(int $id)
+    {
+        if (!$this->getEnemyById($id)) {
+            return false;
+        }
+
+        $req = $this->db()->prepare("
+            DELETE FROM characters
+            WHERE id = :id            
+        ");
+        $req->bindValue(':id', $id);
+        $req->execute();
+
+        return true;
     }
 
 }

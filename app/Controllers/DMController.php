@@ -16,6 +16,7 @@ class DMController extends Controller
         'clone-enemy' => 'cloneEnemy',
         'delete-enemy' => 'deleteEnemy',
     ];
+
     public function __construct()
     {
         parent::__construct();
@@ -51,7 +52,7 @@ class DMController extends Controller
         $data['enemy_def_icons'] = [];
         $data['def_icons_route'] = '/public/images/enemy-icons/';
         for ($i = 1; $i <= 10; $i++) {
-            $data['enemy_def_icons'][] = 'mon'.sprintf('%02d', $i).'.png';
+            $data['enemy_def_icons'][] = 'mon' . sprintf('%02d', $i) . '.png';
         }
 
         if (isset($_POST['enemy'])) {
@@ -71,19 +72,19 @@ class DMController extends Controller
         $enemy_def_icons = [];
         $def_icons_route = '/public/images/enemy-icons/';
         for ($i = 1; $i <= 10; $i++) {
-            $enemy_def_icons[] = 'mon'.sprintf('%02d', $i).'.png';
+            $enemy_def_icons[] = 'mon' . sprintf('%02d', $i) . '.png';
         }
 
-        $enemyId = (int) $params[0];
+        $enemyId = (int)$params[0];
         $enemy = $this->model->getEnemyById($enemyId);
         $enemyData = json_decode($enemy->getData(), true);
         $enemyInventory = $this->model->getInventoryFromCharacter($enemy->getId());
 
         if (isset($_POST['enemy'])) {
-            $enemyId = (int) $_POST['enemy']['id'];
+            $enemyId = (int)$_POST['enemy']['id'];
             $this->saveEnemyData($_POST['enemy'], $enemyId);
 
-            $this->redirect('dm', '/edit-enemy/'.$enemyId);
+            $this->redirect('dm', '/edit-enemy/' . $enemyId);
         }
 
         $this->view->load('dm/edit_enemy', [
@@ -113,7 +114,14 @@ class DMController extends Controller
         $this->model->setInitiative($enemyId, $enemyData['initiative']);
         $this->model->setCharModifiers($enemyId, json_encode($enemyData['mod']));
         $this->model->setCharData($enemyId, json_encode($enemyData['data']));
-        $this->model->setCharInventory($enemyId,json_encode($enemyData['inventory']));
+        $this->model->setCharInventory($enemyId, json_encode($enemyData['inventory']));
     }
 
+    public function deleteEnemy($params)
+    {
+        $enemyId = (int)$params[0];
+        $this->model->deleteEnemy($enemyId);
+
+        $this->redirect('');
+    }
 }

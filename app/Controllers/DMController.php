@@ -42,6 +42,22 @@ class DMController extends Controller
         }
     }
 
+    public function seeEnemy($params)
+    {
+        $enemies = $this->model->getEnemies();
+        $enemyId = (int)$params[0];
+        $enemy = $this->model->getEnemyById($enemyId);
+        $enemyData = json_decode($enemy->getData(), true);
+        $enemyInventory = $this->model->getInventoryFromCharacter($enemy->getId());
+
+        $this->view->load('dm/display_enemy', [
+            'enemies' => $enemies,
+            'enemy' => $enemy,
+            'enemy_data' => $enemyData,
+            'enemy_inventory' => $enemyInventory,
+        ]);
+    }
+
     public function newEnemy()
     {
         // TODO: add uploaded icons to the list [before] the other icons

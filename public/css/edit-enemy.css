@@ -47,6 +47,10 @@ img.icon-image {
     transform-origin: 50% 50%;
     object-fit: contain;
 }
+img.icon-view-image{
+    max-width: 100%;
+    object-fit: contain;
+}
 
 .round-check:checked + label.label-check {
     border-color: #ddd;
@@ -62,4 +66,11 @@ img.icon-image {
     transform: scale(0.9);
     box-shadow: 0 0 5px #333;
     z-index: -1;
+}
+.tabled {
+    border-collapse: collapse;
+}
+.tabled .col, .tabled .col-4 {
+    border: 1px solid #595959;
+    margin: -1px 0 0 -1px;
 }

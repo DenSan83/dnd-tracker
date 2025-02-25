@@ -126,6 +126,10 @@ class CharacterController extends Controller
             $current = $_POST['hp']['current'];
             $max = $_POST['hp']['max'];
 
+            if (!is_int($current) || !is_int($max) || $current > $max) {
+                $this->redirect('edit', '/hp');
+            }
+
             if ($this->model->editHP($_SESSION['character']->getId(), $current, $max))
             {
                 $_SESSION['character']->setHP($current, $max);

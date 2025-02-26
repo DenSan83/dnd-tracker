@@ -123,10 +123,10 @@ class CharacterController extends Controller
         $max = $_SESSION['character']->getMaxHealth();
 
         if (isset($_POST['hp'])) {
-            $current = $_POST['hp']['current'];
-            $max = $_POST['hp']['max'];
+            $current = (int) $_POST['hp']['current'];
+            $max = (int) $_POST['hp']['max'];
 
-            if (!is_int($current) || !is_int($max) || $current > $max) {
+            if (!preg_match('/^\d+$/', $current) || !preg_match('/^\d+$/', $max) || $current > $max) {
                 $this->redirect('edit', '/hp');
             }
 

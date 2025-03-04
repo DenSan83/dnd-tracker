@@ -9,7 +9,7 @@ li {
     display: inline-block;
 }
 
-input.round-check[type="radio"][id^="mdi"] {
+input.round-check[type="radio"][id^="mdi"], input.round-check[type="radio"][id^="mui"] {
     display: none;
 }
 

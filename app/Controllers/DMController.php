@@ -3,6 +3,7 @@
 namespace app\Controllers;
 
 use app\enum\Role;
+use app\helper\Uploader;
 use app\Models\CharacterModel;
 
 class DMController extends Controller
@@ -15,6 +16,7 @@ class DMController extends Controller
         'edit-enemy' => 'editEnemy',
         'clone-enemy' => 'cloneEnemy',
         'delete-enemy' => 'deleteEnemy',
+        'upload-monster-icon' => 'uploadMonsterIcon',
     ];
 
     public function __construct()
@@ -60,8 +62,7 @@ class DMController extends Controller
 
     public function newEnemy()
     {
-        // TODO: add uploaded icons to the list [before] the other icons
-        $data['enemy_uploaded_icons'] = [];
+        $data['enemy_uploaded_icons'] = $this->getUploadedIcons();
         $data['uploaded_icons_route'] = '/uploads/enemy-icons/';
 
         // Default icons
@@ -87,7 +88,7 @@ class DMController extends Controller
     public function editEnemy($params)
     {
         $enemies = $this->model->getEnemies();
-        $enemy_uploaded_icons = [];
+        $enemy_uploaded_icons = $this->getUploadedIcons();
         $uploaded_icons_route = '/uploads/enemy-icons/';
         $enemy_def_icons = [];
         $def_icons_route = '/public/images/enemy-icons/';
@@ -123,7 +124,7 @@ class DMController extends Controller
     public function cloneEnemy($params)
     {
         $enemies = $this->model->getEnemies();
-        $enemy_uploaded_icons = [];
+        $enemy_uploaded_icons = $this->getUploadedIcons();
         $uploaded_icons_route = '/uploads/enemy-icons/';
         $enemy_def_icons = [];
         $def_icons_route = '/public/images/enemy-icons/';
@@ -179,5 +180,32 @@ class DMController extends Controller
         $this->model->deleteEnemy($enemyId);
 
         $this->redirect('');
+    }
+
+    public function uploadMonsterIcon($params)
+    {
+        //$route = HOST . '/dm/edit-enemy/'. $params[0];
+        $uploader = new Uploader();
+        $uploader->send($_FILES['upload'], $_FILES['upload']['name']['img'], 'enemy-icons');
+
+        $this->redirect('dm', '/edit-enemy/'.$params[0]);
+    }
+
+    private function getUploadedIcons(): array
+    {
+        $dir = './uploads/enemy-icons';
+        $icons = [];
+        if (!is_dir($dir)) {
+            return $icons;
+        }
+
+        $ignored = ['.', '..'];
+        foreach (scandir($dir) as $file) {
+            if (in_array($file, $ignored)) continue;
+            $icons[$file] = filemtime($dir . '/' . $file);
+        }
+        arsort($icons);
+
+        return array_keys($icons);
     }
 }

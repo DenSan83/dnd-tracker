@@ -42,7 +42,7 @@
     </div>
     <?php
         $route = '/dm/new-enemy';
-        if (isset($data['action']) && $data['action'] == 'Edit') {
+        if (isset($data['action']) && $data['action'] === 'Edit') {
             $route = '/dm/edit-enemy/'.$data['enemy']->getId();
         }
     ?>
@@ -51,16 +51,23 @@
             <h5>Icon</h5>
             <ul class="d-flex overflow-x-scroll">
                 <?php foreach ($data['enemy_uploaded_icons'] as $key => $icon) { ?>
-                    <li></li>
+                    <li>
+                        <input type="radio" class="round-check" name="enemy[image]" id="mui<?= $key ?>" value="<?= $data['uploaded_icons_route']. $icon ?>"
+                            <?php
+                            if (isset($data['enemy']) && $data['enemy']->getImage() === $data['uploaded_icons_route'] . $icon) {
+                                echo 'checked';
+                            }
+                            ?> />
+                        <label class="label-check" for="mui<?= $key ?>"><img src="<?= HOST . $data['uploaded_icons_route']. $icon ?>" class="icon-image" /></label>
+                    </li>
                 <?php } ?>
                 <?php foreach ($data['enemy_def_icons'] as $key => $icon) { ?>
                     <li>
                         <input type="radio" class="round-check" name="enemy[image]" id="mdi<?= $key ?>" value="<?= $data['def_icons_route']. $icon ?>"
                             <?php
-                            $publicRoute = '/public/images/enemy-icons/';
-                            if (isset($data['enemy']) && $data['enemy']->getImage() === $publicRoute . $icon) {
+                            if (isset($data['enemy']) && $data['enemy']->getImage() === $data['def_icons_route'] . $icon) {
                                 echo 'checked';
-                            } elseif ($key == 0) {
+                            } elseif ($key == 0 && !isset($data['enemy'])) {
                                 echo 'checked';
                             }
                             ?> />
@@ -68,9 +75,16 @@
                     </li>
                 <?php } ?>
             </ul>
-            <div class="text-start">
-                <button class="btn btn-secondary" type="button" disabled>+ Upload enemy icon</button>
-            </div>
+
+            <?php if (isset($data['action']) && $data['action'] === 'Edit') { ?>
+                <!-- Upload modal is only available on edit -->
+                <div class="text-start">
+                    <button class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                        + Upload enemy icon
+                    </button>
+                </div>
+            <?php } ?>
+
         </div>
         <div class="mb-2">
             <input type="hidden" name="enemy[id]" value="<?= isset($data['enemy'])? $data['enemy']->getId() : '';  ?>">
@@ -174,6 +188,29 @@
         <button type="submit" class="btn btn-secondary w-100 mt-3 mb-5"><?= $data['action'] ?></button>
     </form>
 </div>
+
+<?php if (isset($data['action']) && $data['action'] === 'Edit') { ?>
+    <!-- Upload Modal -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" enctype="multipart/form-data"
+                      action="<?= HOST.'/dm/upload-monster-icon/'.$data['enemy']->getId() ?>">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="monster-img" class="form-label">Upload enemy icon</label>
+                            <input type="file" name="upload[img]" class="form-control" id="monster-img">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<?php } ?>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

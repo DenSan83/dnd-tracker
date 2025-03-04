@@ -184,7 +184,6 @@ class DMController extends Controller
 
     public function uploadMonsterIcon($params)
     {
-        //$route = HOST . '/dm/edit-enemy/'. $params[0];
         $uploader = new Uploader();
         $uploader->send($_FILES['upload'], $_FILES['upload']['name']['img'], 'enemy-icons');
 

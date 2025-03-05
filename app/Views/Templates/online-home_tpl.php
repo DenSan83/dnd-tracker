@@ -107,14 +107,22 @@ use app\enum\Role;
                     if ($show === 'true'){ ?>
                     <div class="col turn-<?= $character->getId() ?>">
                         <?php if ($hpIsVisible) { ?>
-                        <div class="progress charlist-hp" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar bg-<?= $curColor ?> progress-bar-animated"
-                                 style="width: <?= $charPercent ?>%"></div>
+                        <div data-bs-toggle="tooltip" data-bs-placement="top"
+                             data-bs-custom-class="custom-tooltip"
+                             data-bs-title="<?= $character->getName() .': '.$character->getCurHealth() . '/' . $character->getMaxHealth()   ?>">
+                            <div class="progress charlist-hp" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar bg-<?= $curColor ?> progress-bar-animated"
+                                     style="width: <?= $charPercent ?>%"></div>
+                            </div>
                         </div>
                         <?php } else { ?>
-                            <div class="progress charlist-hp" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar bg-secondary progress-bar-animated"
-                                     style="width: 100%">?</div>
+                            <div data-bs-toggle="tooltip" data-bs-placement="top"
+                                 data-bs-custom-class="custom-tooltip"
+                                 data-bs-title="<?= $character->getName() ?>">
+                                <div class="progress charlist-hp" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar bg-secondary progress-bar-animated"
+                                         style="width: 100%">?</div>
+                                </div>
                             </div>
                         <?php } ?>
                         <div class="initiative-circle"><?= $character->getInitiative() ?></div>
@@ -123,9 +131,13 @@ use app\enum\Role;
                     </div>
                 <?php }} else { ?>
                 <div class="col turn-<?= $character->getId() ?>">
-                    <div class="progress charlist-hp" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar bg-<?= $curColor ?> progress-bar-animated"
-                             style="width: <?= $charPercent ?>%"></div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top"
+                         data-bs-custom-class="custom-tooltip"
+                         data-bs-title="<?= $character->getName() .': '.$character->getCurHealth() . '/' . $character->getMaxHealth()   ?>">
+                        <div class="progress charlist-hp" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar bg-<?= $curColor ?> progress-bar-animated"
+                                 style="width: <?= $charPercent ?>%"></div>
+                        </div>
                     </div>
                     <div class="initiative-circle">
                         <?= $character->getInitiative() ?>
@@ -142,7 +154,7 @@ use app\enum\Role;
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(() => {
         $('#sidebarToggle').click(function() {
             $('#sidebar').toggle();
             $('.content').toggleClass('ml-0');
@@ -153,6 +165,9 @@ use app\enum\Role;
             $('.content').addClass('ml-0');
         });
     });
+
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 </script>
 
 </body>

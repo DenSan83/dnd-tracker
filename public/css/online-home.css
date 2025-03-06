@@ -76,6 +76,13 @@ body {
 .accordion.spells .accordion-button {
     background-color: #115c39;
 }
+.popover {
+    max-width: 500px;
+    --bs-popover-header-bg: #115c39;
+    --bs-popover-header-color: #fff;
+    --bs-popover-border-color: #6c757d;
+}
+
 .accordion-button:not(.collapsed) {
     background-color: #182025;
 }
@@ -130,7 +137,7 @@ img.icon-image {
     position: relative;
     min-width: 96px;
 }
-.turns .col .initiative-circle {
+.initiative-circle {
     display: flex;
     border-radius: 50%!important;
     background-color: #fff;
@@ -142,6 +149,13 @@ img.icon-image {
     left: -2px;
     border: 1px solid green;
 }
+
+.accordion .initiative-circle {
+    position: absolute;
+    left: 80px;
+    top: 23px;
+}
+
 .turns .col .charlist-hp {
     position: absolute;
     width: 82%;

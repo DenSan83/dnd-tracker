@@ -58,8 +58,12 @@
                             <?= ICONS['gear'] ?>
                         </a>
                     </div>
-                    <div class="d-block">
+                    <div class="d-block position-relative">
                         <b>Player ID:</b> <?= $data['my_character']->getId() ?> <br>
+                        <b>Initiative:</b>
+                        <div class="initiative-circle">
+                            <?= $data['my_character']->getInitiative() ?>
+                        </div><br>
                         <b>Armor Class:</b> <?= $data['about']['armor'] ?? '' ?> <br>
                         <b>Speed:</b> <?= $data['about']['speed'] ?? '' ?> <br>
                         <b>Class:</b>
@@ -113,7 +117,9 @@
                     <div class="d-block">
 
                         <div class="accordion spells" id="spells">
-                            <?php foreach ($data['spells_by_level'] as $levelName => $spells) { ?>
+                            <?php
+                            $tabNb = 0;
+                            foreach ($data['spells_by_level'] as $levelName => $spells) { ?>
                                 <div class="accordion-item">
                                     <h3 class="accordion-header">
                                         <button class="accordion-button collapsed text-light bg-opacity-75 rounded-0"
@@ -126,13 +132,20 @@
                                         <div class="accordion-body">
                                             <div class="d-block">
                                                 <?php foreach ($spells as $spell) { ?>
-                                                    - <span><?= $spell['name'] ?></span> <br>
+                                                    - <span><?= $spell['name'] ?>
+                                                        <a tabindex="<?= $tabNb ?>" class="link" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-html="true"
+                                                           data-bs-title="<?= $spell['name'] ?>"
+                                                           data-bs-content="<?= $spell['details'] ?>">
+                                                            <?= ICONS['arrow-right'] ?>
+                                                        </a>
+                                                    </span>
+                                                    <br>
                                                 <?php } ?>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            <?php } ?>
+                            <?php } $tabNb++; ?>
 
                         </div>
 

@@ -6,6 +6,9 @@ use app\Models\CharacterModel;
 
 class ApiController extends Controller
 {
+    /*
+     * This function is called via Ajax
+     */
     public function apiManager($parameters)
     {
         if ($parameters[0] == 'spells') {

@@ -133,9 +133,10 @@
                                             <div class="d-block">
                                                 <?php foreach ($spells as $spell) { ?>
                                                     - <span><?= $spell['name'] ?>
-                                                        <a tabindex="<?= $tabNb ?>" class="link" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-html="true"
-                                                           data-bs-title="<?= $spell['name'] ?>"
-                                                           data-bs-content="<?= $spell['details'] ?>">
+                                                        <a href=""
+                                                           data-bs-toggle="modal"
+                                                           data-bs-target="#spellsModal"
+                                                           data-modalcontent="<?= htmlspecialchars($spell['modal']) ?>">
                                                             <?= ICONS['arrow-right'] ?>
                                                         </a>
                                                     </span>

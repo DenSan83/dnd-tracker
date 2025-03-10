@@ -57,14 +57,15 @@ class HomeController extends Controller
 
             // About
             $about = (array_key_exists('about', $myCharacter->getCharModifiers())) ? $myCharacter->getCharModifiers()['about'] : [];
+
             // Spells
-            $spellsList = (array_key_exists('spells', $myCharacter->getCharModifiers())) ? $myCharacter->getCharModifiers()['spells'] : [];
-            $spellsByLevel = [];
-            foreach ($spellsList as $spellId) {
-                $thisSpell = $characterModel->getSpellById((int) $spellId);
-                $level = ($thisSpell['level'] === 0) ? 'Cantrips' : 'Level '.$thisSpell['level'];
-                $spellsByLevel[$level][] = $thisSpell;
+            $spellsList = $spellsByLevel = [];
+            if (array_key_exists('spells', $myCharacter->getCharModifiers())) {
+                $spellsList = $myCharacter->getCharModifiers()['spells'];
+                $spellsController = new SpellsController();
+                $spellsByLevel = $spellsController->getSpellsByLevel($spellsList);
             }
+
             // Skills
             $skills = (array_key_exists('skills', $myCharacter->getCharModifiers())) ? $myCharacter->getCharModifiers()['skills'] : [];
 

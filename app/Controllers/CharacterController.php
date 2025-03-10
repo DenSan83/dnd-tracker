@@ -6,6 +6,7 @@ use app\enum\CharClass;
 use app\enum\Role;
 use app\Models\CharacterModel;
 use app\Models\OnlineModel;
+use app\Models\SpellModel;
 
 class CharacterController extends Controller
 {
@@ -254,7 +255,8 @@ class CharacterController extends Controller
 
         $spellsByLevel = [];
         foreach ($spellsIds as $spellId) {
-            $thisSpell = $this->model->getSpellById((int) $spellId);
+            $spellModel = new SpellModel();
+            $thisSpell = $spellModel->getSpellById((int) $spellId);
             $level = ($thisSpell['level'] === 0) ? 'Cantrips' : 'Level '.$thisSpell['level'];
             $spellsByLevel[$level][] = $thisSpell;
         }

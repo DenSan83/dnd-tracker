@@ -178,18 +178,6 @@ class CharacterModel extends Model
         return $req->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getSpellById(int $id)
-    {
-        $columns = (isset(CONF['spell_columns']['conf_value'])) ? ', ' . CONF['spell_columns']['conf_value'] : '';
-        $req = $this->db()->prepare("
-            SELECT id, name $columns FROM spells
-            WHERE id = :id
-        ");
-        $req->bindValue(':id', $id);
-        $req->execute();
-        return $req->fetch(PDO::FETCH_ASSOC);
-    }
-
     public function setCharData(int $id, string $data)
     {
         $req = $this->db()->prepare("

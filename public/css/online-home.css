@@ -76,6 +76,9 @@ body {
 .accordion.spells .accordion-button {
     background-color: #115c39;
 }
+.accordion.spells .accordion-button::after {
+    display: none;
+}
 .popover {
     max-width: 500px;
     --bs-popover-header-bg: #115c39;
@@ -223,5 +226,29 @@ img.icon-image {
 }
 
 .custom-tooltip {
-    --bs-tooltip-bg: #198754;
+    --bs-tooltip-bg: #31404d;
+}
+
+.tooltip-div {
+    display: inline
+}
+
+#spellsModal .modal-content {
+    background-color: transparent;
+    min-height: 200px;
+}
+.spell-modal-body {
+    background-image: url("../../public/images/paperbg.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border-radius: 10px;
+}
+
+.spell-body h1 {
+    text-shadow: 2px 1px 2px #fff;
+    margin-bottom: 0;
+}
+
+.spell-body .subtitle {
+    margin-bottom: 14px;
 }

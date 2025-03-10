@@ -150,6 +150,18 @@ use app\enum\Role;
     </div>
 </div>
 
+<!-- spellsModal -->
+<div class="modal fade" id="spellsModal" tabindex="-1" aria-labelledby="spellsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body spell-modal-body">
+                <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="spell-body"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -170,9 +182,18 @@ use app\enum\Role;
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
-    // popover
+    // Popover
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
     const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+
+    // Modal
+    const spellsModalEl = document.getElementById('spellsModal')
+    spellsModalEl.addEventListener('show.bs.modal', e => {
+        const button = e.relatedTarget;console.log(button);
+        const modalContent = button.getAttribute('data-modalcontent');
+        const spellBody = spellsModalEl.querySelector('.spell-body');
+        spellBody.innerHTML = modalContent;
+    })
 </script>
 
 </body>

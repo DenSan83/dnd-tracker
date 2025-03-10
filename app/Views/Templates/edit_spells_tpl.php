@@ -68,11 +68,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const spellForm = document.getElementById('spellForm');
             const spellInput = document.getElementById('spellInput');
             const spellOutput = document.getElementById('spellOutput');
             const suggestionsDiv = document.getElementById('suggestions');
-            const addButton = document.getElementById('addButton');
             const host = spellInput.dataset.host;
             let debounceTimer;
 
@@ -96,7 +94,7 @@
 
             const displaySuggestions = (suggestions) => {
                 const template = document.getElementById('spell-suggestion-template');
-                suggestionsDiv.innerHTML = ''; // Limpiar sugerencias anteriores
+                suggestionsDiv.innerHTML = '';
 
                 suggestions.forEach(spell => {
                     const levelText = spell.level === 0 ? 'Cantrip' : `Level ${spell.level}`;
@@ -124,7 +122,7 @@
                 debouncedFetch(e.target.value);
             });
 
-            // Manejar clics en las sugerencias
+            // Manage clicks on suggestions
             suggestionsDiv.addEventListener('click', (e) => {
                 const suggestionElement = e.target.closest('.suggestion');
                 if (suggestionElement) {
@@ -132,19 +130,9 @@
                     const spellId = suggestionElement.dataset.spell;
                     spellInput.value = spellName;
                     spellOutput.value = spellId;
-                    suggestionsDiv.innerHTML = ''; // Limpiar sugerencias después de seleccionar
+                    suggestionsDiv.innerHTML = '';
                 }
             });
-
-            //addButton.addEventListener('click', () => {
-                // Aquí puedes agregar la lógica para manejar el botón ADD
-            //    console.log('Spell added:', spellInput.value);
-            //});
-
-            // Prevenir el envío del formulario por defecto
-            //spellForm.addEventListener('submit', (e) => {
-            //    e.preventDefault();
-            //});
         });
     </script>
 

@@ -59,11 +59,15 @@ class HomeController extends Controller
             $about = (array_key_exists('about', $myCharacter->getCharModifiers())) ? $myCharacter->getCharModifiers()['about'] : [];
 
             // Spells
-            $spellsList = $spellsByLevel = [];
+            $manaSlots = $manaCount = $spellsByLevel = [];
             if (array_key_exists('spells', $myCharacter->getCharModifiers())) {
                 $spellsList = $myCharacter->getCharModifiers()['spells'];
                 $spellsController = new SpellsController();
                 $spellsByLevel = $spellsController->getSpellsByLevel($spellsList);
+                $manaSlots = array_key_exists('mana_slots', $_SESSION['character']->getCharModifiers())?
+                    $_SESSION['character']->getCharModifiers()['mana_slots']: [];
+                $manaCount = array_key_exists('mana_count', $_SESSION['character']->getCharModifiers())?
+                    $_SESSION['character']->getCharModifiers()['mana_count']: [];
             }
 
             // Skills
@@ -86,6 +90,8 @@ class HomeController extends Controller
             'modifiers' => $modifiers,
             'about' => $about,
             'spells_by_level' => $spellsByLevel,
+            'mana_slots' => $manaSlots,
+            'mana_count' => $manaCount,
             'skills' => $skills,
             'inventory' => $inventory,
             'enemies' => $enemies

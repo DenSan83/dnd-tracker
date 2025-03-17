@@ -12,7 +12,7 @@ use app\enum\Role;
 </head>
 <body>
 
-<nav class="navbar">
+<nav class="navbar" id="navbar" data-host="<?= HOST ?>" data-player-id="<?= $_SESSION['character']->getId() ?>">
     <div class="container">
         <a class="navbar-brand text-light fw-bold" href="<?= HOST ?>">D&D Tracker</a>
         <div class="" id="navbarNav">
@@ -167,33 +167,75 @@ use app\enum\Role;
 
 <script>
     $(document).ready(() => {
+        // Sidebar toggle
         $('#sidebarToggle').click(function() {
             $('#sidebar').toggle();
             $('.content').toggleClass('ml-0');
         });
-
         $('#closeSidebar').click(function() {
             $('#sidebar').hide();
             $('.content').addClass('ml-0');
         });
+
+        // Tooltip
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+        // Popover
+        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+        const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+
+        // Modal
+        const spellsModalEl = document.getElementById('spellsModal')
+        spellsModalEl.addEventListener('show.bs.modal', e => {
+            const button = e.relatedTarget;
+            const modalContent = button.getAttribute('data-modalcontent');
+            const spellBody = spellsModalEl.querySelector('.spell-body');
+            spellBody.innerHTML = modalContent;
+        })
+
+        // Spell slots count
+        const HOST = document.getElementById('navbar').getAttribute('data-host');
+        const checkboxes = document.querySelectorAll('input[type="checkbox"][data-level]');
+        const countCheckedByLevel = () => {
+            const counts = {};
+            checkboxes.forEach(checkbox => {
+                const level = checkbox.dataset.level;
+                if (!counts[level]) { counts[level] = 0; }
+                if (checkbox.checked) { counts[level]++; }
+            });
+            return counts;
+        };
+        const sendData = counts => {
+            const url = HOST +'/api/update-mana';
+            const data = {
+                mana_count: counts
+            };
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => console.log('Server answer:', data))
+            .catch(error => console.error('Error:', error));
+        };
+        // Add an event listener to each checkbox
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('click', () => {
+                const counts = countCheckedByLevel();
+                sendData(counts);
+            });
+        });
+
+
+
+
+
+
     });
-
-    // Tooltip
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-
-    // Popover
-    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
-
-    // Modal
-    const spellsModalEl = document.getElementById('spellsModal')
-    spellsModalEl.addEventListener('show.bs.modal', e => {
-        const button = e.relatedTarget;console.log(button);
-        const modalContent = button.getAttribute('data-modalcontent');
-        const spellBody = spellsModalEl.querySelector('.spell-body');
-        spellBody.innerHTML = modalContent;
-    })
 </script>
 
 </body>

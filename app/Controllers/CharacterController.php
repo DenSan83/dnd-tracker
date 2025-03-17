@@ -23,6 +23,7 @@ class CharacterController extends Controller
         'abilities-and-modifiers' => 'editAbilitiesModifiers',
         'about' => 'editAbout',
         'spells' => 'editSpells',
+        'mana' => 'editMana',
         'skills' => 'editSkills',
         'inventory' => 'editInventory',
         'other' => 'editOther',
@@ -227,13 +228,38 @@ class CharacterController extends Controller
 
     public function editSpells()
     {
-        $spellsIds = [];
+        // Load data
+        $spellsIds = $spellsNotes = $manaSlots = [];
         if (isset($_SESSION['character']) && array_key_exists('spells', $_SESSION['character']->getCharModifiers())) {
             $spellsIds = $_SESSION['character']->getCharModifiers()['spells'];
             sort($spellsIds);
+            $manaSlots = array_key_exists('mana_slots', $_SESSION['character']->getCharModifiers())?
+                $_SESSION['character']->getCharModifiers()['mana_slots'] : [];
+            $spellsNotes = array_key_exists('spell_notes', $_SESSION['character']->getCharModifiers())?
+                $_SESSION['character']->getCharModifiers()['spell_notes'] : [];
         }
+
+        // Delete spell
+        if (isset($_GET['del_id'])) {
+            $idToDelete = $_GET['del_id'];
+            if (in_array($idToDelete, $spellsIds)) {
+                unset($spellsIds[array_search($idToDelete, $spellsIds)]);
+                $spellsIds = array_values($spellsIds);
+                $this->setCharModifiers('spells', $spellsIds);
+
+                if (isset($spellsNotes[$idToDelete])) {
+                    unset($spellsNotes[$idToDelete]);
+                    $this->setCharModifiers('spell_notes', $spellsNotes);
+                }
+            }
+            $this->redirect('edit', '/spells');
+            exit;
+        }
+
+        // Add new spell
         if (isset($_POST['spell'])) {
             $spellId = $_POST['spell']['find'];
+            $thisSpellNotes = $_POST['spell']['notes'];
             if ('' !== $spellId && !in_array($spellId, $spellsIds)) {
                 $spellsIds[] = $spellId;
             }
@@ -249,21 +275,43 @@ class CharacterController extends Controller
             ///////////// end temp fix
 
             $this->setCharModifiers('spells', $spellsIds);
+
+            // Notes are added on clean spell array
+            if (in_array($spellId, $spellsIds) && $thisSpellNotes !== '') {
+                $spellsNotes[$spellId] = $thisSpellNotes;
+                $this->setCharModifiers('spell_notes', $spellsNotes);
+            }
             // TODO log
             // TODO: return success message
         }
 
-        $spellsByLevel = [];
+        $spellsByLevel = $levelCount = [];
         foreach ($spellsIds as $spellId) {
             $spellModel = new SpellModel();
             $thisSpell = $spellModel->getSpellById((int) $spellId);
             $level = ($thisSpell['level'] === 0) ? 'Cantrips' : 'Level '.$thisSpell['level'];
             $spellsByLevel[$level][] = $thisSpell;
+
+            if ($thisSpell['level'] != 0) {
+                if (array_key_exists($thisSpell['level'], $levelCount)) { $levelCount[$thisSpell['level']]++; }
+                else { $levelCount[$thisSpell['level']] = 1; }
+            }
         }
 
+        $finalArray = [];
+        foreach ($levelCount as $level => $levels) {
+            if (!array_key_exists($level, $manaSlots)) { $manaSlots[$level] = 1; }
+            $finalArray[$level] = $manaSlots[$level];
+        }
+        $manaSlots = $finalArray;
+        ksort($manaSlots);
+        $this->setCharModifiers('mana_slots', $manaSlots);
+        ksort($spellsByLevel);
 
         $this->view->load('edit_spells', [
-            'spells_by_level' => $spellsByLevel
+            'spells_by_level' => $spellsByLevel,
+            'mana_slots' => $manaSlots,
+            'notes' => $spellsNotes,
         ]);
     }
 
@@ -343,5 +391,13 @@ class CharacterController extends Controller
         $this->view->load('edit_other', [
             'data' => $data
         ]);
+    }
+
+    public function editMana($param)
+    {
+        if (isset($_POST['mana'])) {
+            $this->setCharModifiers('mana_slots', $_POST['mana']);
+        }
+        $this->redirect('edit', '/spells');
     }
 }

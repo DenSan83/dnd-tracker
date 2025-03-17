@@ -109,24 +109,35 @@
             </h2>
             <div id="collapse_1" class="accordion-collapse collapse" data-bs-parent="#my-data">
                 <div class="accordion-body">
-                    <div class="float-end mb-2">
-                        <a href="<?= HOST ?>/edit/spells" class="text-dark">
-                            <?= ICONS['gear'] ?>
-                        </a>
+                    <div class="d-flex justify-content-end w-100">
+                        <div class="mb-2">
+                            <a href="<?= HOST ?>/edit/spells" class="text-dark">
+                                <?= ICONS['gear'] ?>
+                            </a>
+                        </div>
                     </div>
                     <div class="d-block">
-
                         <div class="accordion spells" id="spells">
-                            <?php
-                            $tabNb = 0;
-                            foreach ($data['spells_by_level'] as $levelName => $spells) { ?>
+                            <?php $manaCount = $data['mana_count'] ?? [];
+                            foreach ($data['spells_by_level'] as $levelName => $spells) {
+                                $lvl = ($levelName === 'Cantrips') ? 0 : (strpos($levelName, 'Level ') === 0 ? (int) substr($levelName, 6) : null); ?>
                                 <div class="accordion-item">
-                                    <h3 class="accordion-header">
+                                    <h3 class="accordion-header d-flex justify-content-between align-items-center">
                                         <button class="accordion-button collapsed text-light bg-opacity-75 rounded-0"
                                                 type="button" data-bs-toggle="collapse" data-bs-target="#<?= $this->stringify($levelName) ?>"
                                                 aria-controls="<?= $this->stringify($levelName) ?>">
                                             <?= $levelName ?>
                                         </button>
+                                        <?php if ($lvl != 0) {
+                                        $qty = array_key_exists($lvl, $data['mana_slots'])? (int) $data['mana_slots'][$lvl] : 1; ?>
+                                        <div class="d-flex">
+                                            <?php for ($i = 0; $i < $qty; $i++) {
+                                                $checked = array_key_exists($lvl, $manaCount) ? $manaCount[$lvl] : 0; ?>
+                                            <input type="checkbox" class="me-2" name="mana_slots[<?= $lvl ?>]" data-level="<?= $lvl ?>"
+                                                <?= $i < $checked ? 'checked' : '' ?>>
+                                            <?php } ?>
+                                        </div>
+                                        <?php } ?>
                                     </h3>
                                     <div id="<?= $this->stringify($levelName) ?>" class="accordion-collapse collapse">
                                         <div class="accordion-body">
@@ -146,7 +157,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            <?php } $tabNb++; ?>
+                            <?php } ?>
 
                         </div>
 

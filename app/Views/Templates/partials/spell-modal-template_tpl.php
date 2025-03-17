@@ -36,4 +36,9 @@
     <?php if ($source) { ?>
         <small><b>Source: </b> <a target="_blank" href="<?= $url ?>"><?= $source ?></a></small>
     <?php } ?>
+
+    <?php if ($notes) { ?>
+        <hr>
+        <p><b>Notes: </b> <?= $notes ?></p>
+    <?php } ?>
 </div>

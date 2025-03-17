@@ -73,6 +73,9 @@ body {
 .accordion .accordion-button {
     background-color: #31404d;
 }
+.accordion.spells .accordion-header {
+    background-color: #115c39;
+}
 .accordion.spells .accordion-button {
     background-color: #115c39;
 }
@@ -90,7 +93,7 @@ body {
     background-color: #182025;
 }
 .accordion-button:focus {
-    box-shadow: 0 0 0 0.25rem #e4071240;
+    box-shadow: none;
 }
 .accordion-item {
     border: 0;
@@ -251,4 +254,13 @@ img.icon-image {
 
 .spell-body .subtitle {
     margin-bottom: 14px;
+}
+
+.mana-slots {
+    text-align: left;
+}
+
+.mana-slots input {
+    width: 50px;
+    text-align: center;
 }

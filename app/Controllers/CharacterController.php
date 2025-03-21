@@ -25,6 +25,7 @@ class CharacterController extends Controller
         'spells' => 'editSpells',
         'mana' => 'editMana',
         'skills' => 'editSkills',
+        'feats' => 'editFeats',
         'inventory' => 'editInventory',
         'other' => 'editOther',
     ];
@@ -317,24 +318,29 @@ class CharacterController extends Controller
 
     public function editSkills()
     {
-        $skills = [];
-        if (isset($_SESSION['character']) && array_key_exists('skills', $_SESSION['character']->getCharModifiers())) {
-            $skills = $_SESSION['character']->getCharModifiers()['skills'];
-            //sort($spellsIds);
+        // TODO
+        echo 'in progress.'; exit;
+    }
+
+    public function editFeats()
+    {
+        $feats = [];
+        if (isset($_SESSION['character']) && array_key_exists('feats', $_SESSION['character']->getCharModifiers())) {
+            $feats = $_SESSION['character']->getCharModifiers()['feats'];
         }
-        if (isset($_POST['skill'])) {
-            $skill = [
-                'name' => $_POST['skill']['name'],
-                'link' => $_POST['skill']['link']
+        if (isset($_POST['feat'])) {
+            $feats = [
+                'name' => $_POST['feat']['name'],
+                'link' => $_POST['feat']['link']
             ];
-            $skills[] = $skill;
-            $this->setCharModifiers('skills', $skills);
+            $feats[] = $feats;
+            $this->setCharModifiers('feats', $feats);
             // TODO log
             // TODO: return success message
         }
 
-        $this->view->load('edit_skills', [
-            'skills' => $skills
+        $this->view->load('edit_feats', [
+            'feats' => $feats
         ]);
     }
 

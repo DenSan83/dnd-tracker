@@ -179,9 +179,6 @@
                         </a>
                     </div>
                     <div class="d-block">
-                        <?php foreach ($data['skills'] as $skill) { ?>
-                            - <a href="<?= $skill['link'] ?>" target="_blank"><?= $skill['name'] ?></a> <br>
-                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -189,10 +186,31 @@
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed text-light bg-opacity-75" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_3" aria-controls="collapse_3">
-                    Inventory
+                    Feats
                 </button>
             </h2>
             <div id="collapse_3" class="accordion-collapse collapse" data-bs-parent="#my-data">
+                <div class="accordion-body">
+                    <div class="float-end">
+                        <a href="<?= HOST ?>/edit/feats" class="text-dark">
+                            <?= ICONS['gear'] ?>
+                        </a>
+                    </div>
+                    <div class="d-block">
+                        <?php foreach ($data['feats'] as $feat) { ?>
+                            - <a href="<?= $feat['link'] ?>" target="_blank"><?= $feat['name'] ?></a> <br>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed text-light bg-opacity-75" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_4" aria-controls="collapse_4">
+                    Inventory
+                </button>
+            </h2>
+            <div id="collapse_4" class="accordion-collapse collapse" data-bs-parent="#my-data">
                 <div class="accordion-body">
                     <div class="float-end">
                         <a href="<?= HOST ?>/edit/inventory" class="text-dark">
@@ -210,11 +228,11 @@
         </div>
         <div class="accordion-item">
             <h2 class="accordion-header">
-                <button class="accordion-button collapsed text-light bg-opacity-75 rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_4" aria-controls="collapse_4">
+                <button class="accordion-button collapsed text-light bg-opacity-75 rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_5" aria-controls="collapse_5">
                     Other
                 </button>
             </h2>
-            <div id="collapse_4" class="accordion-collapse collapse" data-bs-parent="#my-data">
+            <div id="collapse_5" class="accordion-collapse collapse" data-bs-parent="#my-data">
                 <div class="accordion-body">
                     <div class="float-end">
                         <a href="<?= HOST ?>/edit/other" class="text-dark">

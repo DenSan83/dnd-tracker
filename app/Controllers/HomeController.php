@@ -70,8 +70,8 @@ class HomeController extends Controller
                     $_SESSION['character']->getCharModifiers()['mana_count']: [];
             }
 
-            // Skills
-            $skills = (array_key_exists('skills', $myCharacter->getCharModifiers())) ? $myCharacter->getCharModifiers()['skills'] : [];
+            // Feats
+            $feats = (array_key_exists('feats', $myCharacter->getCharModifiers())) ? $myCharacter->getCharModifiers()['feats'] : [];
 
             // Inventory
             $inventory = $characterModel->getInventoryFromCharacter($_SESSION['character']->getId());
@@ -92,7 +92,7 @@ class HomeController extends Controller
             'spells_by_level' => $spellsByLevel,
             'mana_slots' => $manaSlots,
             'mana_count' => $manaCount,
-            'skills' => $skills,
+            'feats' => $feats,
             'inventory' => $inventory,
             'enemies' => $enemies
         ]);

@@ -101,6 +101,9 @@ body {
 .accordion-item:not(:last-child) {
     border-bottom: 1px solid transparent;
 }
+.about-gear {
+    z-index: 1;
+}
 .content {
     padding: 20px;
     transition: margin-left 0.3s;

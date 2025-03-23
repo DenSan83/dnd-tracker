@@ -53,7 +53,7 @@
             </h2>
             <div id="collapse_0" class="accordion-collapse collapse" data-bs-parent="#my-data">
                 <div class="accordion-body">
-                    <div class="float-end">
+                    <div class="float-end position-relative about-gear">
                         <a href="<?= HOST ?>/edit/about" class="text-dark">
                             <?= ICONS['gear'] ?>
                         </a>
